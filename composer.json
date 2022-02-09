@@ -1,4 +1,6 @@
 {
+    "name": "serendipity/s9y",
+    "description": "A reliable, secure and extensible PHP blog",
     "repositories": [
         {
             "type": "composer",
@@ -9,6 +11,10 @@
         "php": "~7.0",
         "katzgrau/klogger": "1.0.*",
         "voku/simple-cache": "4.*"
+    },
+    "autoload": {
+        "psr-4": { "": "lib/" },
+        "classmap": [ "include/" ]
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
