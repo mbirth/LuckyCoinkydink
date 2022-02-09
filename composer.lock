@@ -1,9 +1,14 @@
 {
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "98bec009e636138a74601c2c4025e160",
     "packages": [
         {
             "name": "katzgrau/klogger",
             "version": "1.0.0",
-            "version_normalized": "1.0.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/katzgrau/klogger.git",
@@ -22,9 +27,7 @@
             "require-dev": {
                 "phpunit/phpunit": "4.0.*"
             },
-            "time": "2014-03-20T02:36:36+00:00",
             "type": "library",
-            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "Katzgrau\\KLogger\\": "src/"
@@ -53,12 +56,15 @@
             "keywords": [
                 "logging"
             ],
-            "install-path": "../katzgrau/klogger"
+            "support": {
+                "issues": "https://github.com/katzgrau/klogger/issues",
+                "source": "https://github.com/katzgrau/klogger/tree/1.0.0"
+            },
+            "time": "2014-03-20T02:36:36+00:00"
         },
         {
             "name": "psr/log",
             "version": "1.0.0",
-            "version_normalized": "1.0.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
@@ -70,9 +76,7 @@
                 "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b",
                 "shasum": ""
             },
-            "time": "2012-12-21T11:40:51+00:00",
             "type": "library",
-            "installation-source": "dist",
             "autoload": {
                 "psr-0": {
                     "Psr\\Log\\": ""
@@ -94,12 +98,15 @@
                 "psr",
                 "psr-3"
             ],
-            "install-path": "../psr/log"
+            "support": {
+                "issues": "https://github.com/php-fig/log/issues",
+                "source": "https://github.com/php-fig/log/tree/1.0.0"
+            },
+            "time": "2012-12-21T11:40:51+00:00"
         },
         {
             "name": "psr/simple-cache",
             "version": "1.0.1",
-            "version_normalized": "1.0.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/simple-cache.git",
@@ -114,14 +121,12 @@
             "require": {
                 "php": ">=5.3.0"
             },
-            "time": "2017-10-23T01:57:42+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
                     "dev-master": "1.0.x-dev"
                 }
             },
-            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "Psr\\SimpleCache\\": "src/"
@@ -145,12 +150,14 @@
                 "psr-16",
                 "simple-cache"
             ],
-            "install-path": "../psr/simple-cache"
+            "support": {
+                "source": "https://github.com/php-fig/simple-cache/tree/master"
+            },
+            "time": "2017-10-23T01:57:42+00:00"
         },
         {
             "name": "voku/simple-cache",
             "version": "4.0.5",
-            "version_normalized": "4.0.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/voku/simple-cache.git",
@@ -176,9 +183,7 @@
                 "predis/predis": "~1.1",
                 "symfony/var-exporter": "~3.0 || ~4.0 || ~5.0"
             },
-            "time": "2020-03-15T21:00:57+00:00",
             "type": "library",
-            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "voku\\cache\\": "src/voku/cache/"
@@ -225,9 +230,21 @@
                     "type": "tidelift"
                 }
             ],
-            "install-path": "../voku/simple-cache"
+            "time": "2020-03-15T21:00:57+00:00"
         }
     ],
-    "dev": true,
-    "dev-package-names": []
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "dev",
+    "stability-flags": [],
+    "prefer-stable": true,
+    "prefer-lowest": false,
+    "platform": {
+        "php": "~7.0"
+    },
+    "platform-dev": [],
+    "platform-overrides": {
+        "php": "7.99.99"
+    },
+    "plugin-api-version": "2.2.0"
 }

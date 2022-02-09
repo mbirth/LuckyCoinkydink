@@ -15,15 +15,9 @@
     "config": {
         "apcu-autoloader": true,
         "optimize-autoloader": true,
-        "github-protocols": [
-            "git",
-            "https",
-            "http"
-        ],
         "platform": {
-            "php": "7.0.99"
+            "php": "7.99.99"
         },
-        "sort-packages": true,
-        "vendor-dir": "bundled-libs"
+        "sort-packages": true
     }
 }
