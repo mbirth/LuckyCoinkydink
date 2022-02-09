@@ -9,6 +9,7 @@
     ],
     "require": {
         "php": "~7.0",
+        "foxy/foxy": "^1.0.0",
         "katzgrau/klogger": "1.0.*",
         "voku/simple-cache": "4.*"
     },
@@ -24,6 +25,9 @@
         "platform": {
             "php": "7.99.99"
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "foxy/foxy": true
+        }
     }
 }

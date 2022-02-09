@@ -10,6 +10,10 @@
 
  var customplugins = 'mediaembed,procurator,cheatsheet,widget,dialog,codesnippet,';
 
+ CKEDITOR.plugins.addExternal('cheatsheet', '../../htmlarea/ckeditor/ckeditor/plugins/cheatsheet/');
+ CKEDITOR.plugins.addExternal('mediaembed', '../../htmlarea/ckeditor/ckeditor/plugins/mediaembed/');
+ CKEDITOR.plugins.addExternal('procurator', '../../htmlarea/ckeditor/ckeditor/plugins/procurator/');
+
  CKEDITOR.on('instanceReady', function(evt){
 
     var editor = evt.editor,
