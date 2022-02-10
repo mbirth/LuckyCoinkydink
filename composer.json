@@ -11,6 +11,7 @@
         "php": "~7.0",
         "foxy/foxy": "^1.0.0",
         "katzgrau/klogger": "1.0.*",
+        "smarty/smarty": "~3.1.33",
         "voku/simple-cache": "4.*"
     },
     "autoload": {
