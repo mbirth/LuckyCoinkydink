@@ -37,6 +37,9 @@
 !/plugins/serendipity_plugin_syndication/
 !/plugins/serendipity_plugin_templatedropdown/
 
+# Nova IDE
+/.nova/
+
 # ide / dev stuff
 .cvsignore
 .htaccess*
