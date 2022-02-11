@@ -1,8 +1,37 @@
 # application stuff
-uploads/*
-templates_c/*
-serendipity_config_local.inc.php
-plugins/additional_plugins*
+/uploads/*
+/templates_c/*
+/serendipity_config_local.inc.php
+
+# all non-bundled plugins
+/plugins/*
+!/plugins/serendipity_event_bbcode/
+!/plugins/serendipity_event_creativecommons/
+!/plugins/serendipity_event_emoticate/
+!/plugins/serendipity_event_entryproperties/
+!/plugins/serendipity_event_mailer/
+!/plugins/serendipity_event_nl2br/
+!/plugins/serendipity_event_responsiveimages/
+!/plugins/serendipity_event_s9ymarkup/
+!/plugins/serendipity_event_spamblock/
+!/plugins/serendipity_event_spartacus/
+!/plugins/serendipity_event_templatechooser/
+!/plugins/serendipity_event_textile/
+!/plugins/serendipity_event_xhtmlcleanup/
+!/plugins/serendipity_plugin_archives/
+!/plugins/serendipity_plugin_calendar/
+!/plugins/serendipity_plugin_comments/
+!/plugins/serendipity_plugin_creativecommons/
+!/plugins/serendipity_plugin_entrylinks/
+!/plugins/serendipity_plugin_eventwrapper/
+!/plugins/serendipity_plugin_history/
+!/plugins/serendipity_plugin_html_nugget/
+!/plugins/serendipity_plugin_plug/
+!/plugins/serendipity_plugin_recententries/
+!/plugins/serendipity_plugin_remoterss/
+!/plugins/serendipity_plugin_superuser/
+!/plugins/serendipity_plugin_syndication/
+!/plugins/serendipity_plugin_templatedropdown/
 
 # ide / dev stuff
 .cvsignore
@@ -16,7 +45,6 @@ DEADJOE
 /.buildpath
 /.project
 .DS_Store
-.editorconfig
 *.git
 tests/phpunit.xml
 vagrant/*
