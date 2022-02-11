@@ -377,11 +377,11 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "~7.0"
+        "php": ">=7.0 <9.0"
     },
     "platform-dev": [],
     "platform-overrides": {
-        "php": "7.99.99"
+        "php": "8.99.99"
     },
     "plugin-api-version": "2.2.0"
 }
