@@ -9,6 +9,7 @@
 !/plugins/serendipity_event_creativecommons/
 !/plugins/serendipity_event_emoticate/
 !/plugins/serendipity_event_entryproperties/
+!/plugins/serendipity_event_gravatar/
 !/plugins/serendipity_event_mailer/
 !/plugins/serendipity_event_nl2br/
 !/plugins/serendipity_event_responsiveimages/
@@ -19,7 +20,9 @@
 !/plugins/serendipity_event_textile/
 !/plugins/serendipity_event_xhtmlcleanup/
 !/plugins/serendipity_plugin_archives/
+!/plugins/serendipity_plugin_authors/
 !/plugins/serendipity_plugin_calendar/
+!/plugins/serendipity_plugin_categories/
 !/plugins/serendipity_plugin_comments/
 !/plugins/serendipity_plugin_creativecommons/
 !/plugins/serendipity_plugin_entrylinks/
@@ -27,6 +30,7 @@
 !/plugins/serendipity_plugin_history/
 !/plugins/serendipity_plugin_html_nugget/
 !/plugins/serendipity_plugin_plug/
+!/plugins/serendipity_plugin_quicksearch/
 !/plugins/serendipity_plugin_recententries/
 !/plugins/serendipity_plugin_remoterss/
 !/plugins/serendipity_plugin_superuser/
