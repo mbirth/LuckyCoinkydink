@@ -68,6 +68,7 @@ if ($serendipity['production']) {
 
 if ($serendipity['production'] !== true) {
     @ini_set('display_errors', 'on');
+    @ini_set('display_startup_errors', 'on');
 }
 
 // The serendipity errorhandler string
@@ -242,6 +243,13 @@ if (function_exists('get_include_path')) {
 
 
 require_once("vendor/autoload.php");
+
+
+if ($serendipity['production'] !== true) {
+    $whoops = new \Whoops\Run;
+    $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+    $whoops->register();
+}
 
 $new_include = ($serendipity['use_PEAR'] ? $old_include . PATH_SEPARATOR : '')
              . S9Y_INCLUDE_PATH . 'bundled-libs/' . PATH_SEPARATOR
