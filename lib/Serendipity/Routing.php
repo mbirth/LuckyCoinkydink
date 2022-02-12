@@ -5,6 +5,8 @@
 
 namespace Serendipity;
 
+use Serendipity\PageGenerator;
+
 class Routing
 {
     protected $serendipity;
@@ -25,9 +27,8 @@ class Routing
             $this->serendipity['uriArguments'][] = PATH_ARCHIVES;
         }
 
-        // TODO: REMOVE - BACKWARDS COMPATIBILITY
-        $serendipity =& $this->serendipity;
-        include(S9Y_INCLUDE_PATH . 'include/genpage.inc.php');
+        $pg = new PageGenerator($this->serendipity);
+        $pg->render();
     }
 
     public function serve404()
@@ -37,9 +38,8 @@ class Routing
         $this->serendipity['content_message'] = URL_NOT_FOUND;
         header('HTTP/1.0 404 Not found');
         header('Status: 404 Not found');
-        // TODO: REMOVE - BACKWARDS COMPATIBILITY
-        $serendipity =& $this->serendipity;
-        include(S9Y_INCLUDE_PATH . 'include/genpage.inc.php');
+        $pg = new PageGenerator($this->serendipity);
+        $pg->render();
     }
 
     /* Attempt to locate hidden variables within the URI */
@@ -135,9 +135,9 @@ class Routing
         }
         $this->serendipity['head_subtitle'] = $this->serendipity['blogTitle'];
         $this->serendipity['GET']['action']     = 'comments';
-        // TODO: REMOVE - BACKWARDS COMPATIBILITY
-        $serendipity =& $this->serendipity;
-        include(S9Y_INCLUDE_PATH . 'include/genpage.inc.php');
+
+        $pg = new PageGenerator($this->serendipity);
+        $pg->render();
     }
 
     public function serveJS($js_mode)
@@ -159,9 +159,8 @@ class Routing
         // the fix below
         $this->serendipity['GET']['action'] = 'empty';
 
-        // TODO: REMOVE - BACKWARDS COMPATIBILITY
-        $serendipity =& $this->serendipity;
-        include(S9Y_INCLUDE_PATH . 'include/genpage.inc.php');
+        $pg = new PageGenerator($this->serendipity);
+        $pg->render();
 
         // HOTFIX: The staticpage plugin spews out a 404 error in the genpage hook,
         // because it assumes that all "normal" content pages could belong to it.
@@ -215,9 +214,9 @@ class Routing
 
         $this->serendipity['GET']['action']     = 'search';
         $this->serendipity['GET']['searchTerm'] = urldecode(serendipity_specialchars(strip_tags(implode(' ', $search))));
-        // TODO: REMOVE - BACKWARDS COMPATIBILITY
-        $serendipity =& $this->serendipity;
-        include(S9Y_INCLUDE_PATH . 'include/genpage.inc.php');
+
+        $pg = new PageGenerator($this->serendipity);
+        $pg->render();
     }
 
     public function serveAuthorPage($matches)
@@ -246,9 +245,8 @@ class Routing
             $this->serendipity['head_subtitle'] = $this->serendipity['blogTitle'];
         }
 
-        // TODO: REMOVE - BACKWARDS COMPATIBILITY
-        $serendipity =& $this->serendipity;
-        include(S9Y_INCLUDE_PATH . 'include/genpage.inc.php');
+        $pg = new PageGenerator($this->serendipity);
+        $pg->render();
     }
 
     public function serveCategory($matches)
@@ -292,9 +290,8 @@ class Routing
             $this->serendipity['head_subtitle'] = $this->serendipity['blogTitle'];
         }
 
-        // TODO: REMOVE - BACKWARDS COMPATIBILITY
-        $serendipity =& $this->serendipity;
-        include(S9Y_INCLUDE_PATH . 'include/genpage.inc.php');
+        $pg = new PageGenerator($this->serendipity);
+        $pg->render();
     }
 
     public function serveArchive()
@@ -304,9 +301,8 @@ class Routing
 
         $this->locateHiddenVariables($this->serendipity['uriArguments']);
 
-        // TODO: REMOVE - BACKWARDS COMPATIBILITY
-        $serendipity =& $this->serendipity;
-        include(S9Y_INCLUDE_PATH . 'include/genpage.inc.php');
+        $pg = new PageGenerator($this->serendipity);
+        $pg->render();
     }
 
     public function gotoAdmin()
@@ -322,12 +318,13 @@ class Routing
     public function servePlugin($matches) {
         $this->serendipity['view'] = 'plugin';
 
-        // TODO: REMOVE - BACKWARDS COMPATIBILITY
-        $serendipity =& $this->serendipity;
         if (strpos($matches[2], 'admin/')  !== false) {
-            include(S9Y_INCLUDE_PATH . 'include/genpage.inc.php');
+            $pg = new PageGenerator($this->serendipity);
+            $pg->render();
         }
 
+        // TODO: REMOVE - BACKWARDS COMPATIBILITY
+        $serendipity =& $this->serendipity;
         \serendipity_plugin_api::hook_event('external_plugin', $matches[2]);
     }
 
@@ -418,9 +415,8 @@ class Routing
             header('Status: 404 Not found');
         }
 
-        // TODO: REMOVE - BACKWARDS COMPATIBILITY
-        $serendipity =& $this->serendipity;
-        include(S9Y_INCLUDE_PATH . 'include/genpage.inc.php');
+        $pg = new PageGenerator($this->serendipity);
+        $pg->render();
     }
 
     public function serveArchives()
@@ -513,8 +509,7 @@ class Routing
             $this->serendipity['head_subtitle'] .= sprintf(ENTRIES_FOR, $date);
         }
 
-        // TODO: REMOVE - BACKWARDS COMPATIBILITY
-        $serendipity =& $this->serendipity;
-        include(S9Y_INCLUDE_PATH . 'include/genpage.inc.php');
+        $pg = new PageGenerator($this->serendipity);
+        $pg->render();
     }
 }
