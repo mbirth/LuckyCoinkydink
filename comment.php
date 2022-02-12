@@ -1,6 +1,11 @@
 <?php
-# Copyright (c) 2003-2005, Jannis Hermanns (on behalf the Serendipity Developer Team)
-# All rights reserved.  See LICENSE file for licensing details
+
+// Serendipity
+// See LICENSE file for license information.
+
+require_once __DIR__ . '/lib/bootstrap.php';
+
+use Serendipity\PageGenerator;
 
 #if ($_REQUEST['type'] == 'trackback') die('Disabled');
 
@@ -32,7 +37,8 @@ if (!empty($_REQUEST['c']) && !empty($_REQUEST['hash'])) {
         'subscribe_confirm_error'				=> !$res,
         'subscribe_confirm_success'				=> $res,
     );
-    include S9Y_INCLUDE_PATH . 'include/genpage.inc.php';
+    $pg = new PageGenerator($serendipity);
+    $pg->render();
     $serendipity['smarty']->display(serendipity_getTemplateFile('index.tpl', 'serendipityPath'));
     exit;
 }
@@ -46,7 +52,8 @@ if (!empty($_REQUEST['optin'])) {
         'subscribe_confirm_error'				=> !$res,
         'subscribe_confirm_success'				=> $res,
     );
-    include S9Y_INCLUDE_PATH . 'include/genpage.inc.php';
+    $pg = new PageGenerator($serendipity);
+    $pg->render();
     $serendipity['smarty']->display(serendipity_getTemplateFile('index.tpl', 'serendipityPath'));
     exit;
 }
