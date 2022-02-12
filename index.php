@@ -2,6 +2,7 @@
 # Copyright (c) 2003-2005, Jannis Hermanns (on behalf the Serendipity Developer Team)
 # All rights reserved.  See LICENSE file for licensing details
 
+require_once __DIR__ . '/lib/bootstrap.php';
 
 // We need to set this to return a 200 since we use .htaccess ErrorDocument
 // rules to handle archives.

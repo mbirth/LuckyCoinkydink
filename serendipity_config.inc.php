@@ -241,16 +241,6 @@ if (function_exists('get_include_path')) {
     $old_include = @ini_get('include_path');
 }
 
-
-require_once("vendor/autoload.php");
-
-
-if ($serendipity['production'] !== true) {
-    $whoops = new \Whoops\Run;
-    $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
-    $whoops->register();
-}
-
 $new_include = ($serendipity['use_PEAR'] ? $old_include . PATH_SEPARATOR : '')
              . S9Y_INCLUDE_PATH . 'bundled-libs/' . PATH_SEPARATOR
              . $serendipity['serendipityPath'] . PATH_SEPARATOR
