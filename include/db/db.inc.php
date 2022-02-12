@@ -165,3 +165,10 @@ function serendipity_db_probe($hash, &$errs)
     $db = DbFactory::createFromConfig($serendipity);
     return $db->probe($hash, $errs);
 }
+
+function serendipity_utf8mb4_reader()
+{
+    global $serendipity;
+    $db = DbFactory::createFromConfig($serendipity);
+    return $db->isUtf8mb4Ready();
+}

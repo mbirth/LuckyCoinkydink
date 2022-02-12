@@ -331,8 +331,8 @@ class MysqliDatabase extends DbAbstract
      * innodb being available with fulltext index and large index support, so that our database scheme can work
      *
      * @return boolean   Whether the database could support utf8mb4
-     */ 
-    protected function isUtf8mb4Ready()
+     */
+    public function isUtf8mb4Ready()
     {
         $mysql_version = mysqli_get_server_info($this->db_conn);
         $maria = false;
