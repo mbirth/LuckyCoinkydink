@@ -9,11 +9,22 @@
     ],
     "require": {
         "php": ">=7.0 <9.0",
+        "ext-pcre": "*",
+        "ext-xml": "*",
         "filp/whoops": "^2.14",
         "foxy/foxy": "^1.0.0",
         "katzgrau/klogger": "~1.0",
         "smarty/smarty": "~3.1.33",
         "voku/simple-cache": "4.*"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.6"
+    },
+    "suggest": {
+        "ext-gd": "Install for graphics handling.",
+        "ext-iconv": "Install for language handling.",
+        "ext-zlib": "Install for compression handling.",
+        "ext-mbstring": "Install for better international language support."
     },
     "autoload": {
         "psr-4": { "": "lib/" },
@@ -25,14 +36,11 @@
         "apcu-autoloader": true,
         "optimize-autoloader": true,
         "platform": {
-            "php": "8.99.99"
+            "php": "7.99.99"
         },
         "sort-packages": true,
         "allow-plugins": {
             "foxy/foxy": true
         }
-    },
-    "require-dev": {
-        "squizlabs/php_codesniffer": "^3.6"
     }
 }

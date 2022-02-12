@@ -1,4 +1,5 @@
 # application stuff
+/node_modules/
 /uploads/*
 /templates_c/*
 /serendipity_config_local.inc.php
@@ -53,5 +54,6 @@ DEADJOE
 /.project
 .DS_Store
 *.git
+/tags.lock
 tests/phpunit.xml
 vagrant/*
