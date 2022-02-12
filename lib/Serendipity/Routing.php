@@ -7,6 +7,8 @@ namespace Serendipity;
 
 class Routing
 {
+    protected $serendipity;
+
     public function __construct(&$serendipity)
     {
         $this->serendipity =& $serendipity;
