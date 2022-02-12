@@ -1,8 +1,11 @@
 <?php
-# Copyright (c) 2003-2005, Jannis Hermanns (on behalf the Serendipity Developer Team)
-# All rights reserved.  See LICENSE file for licensing details
+
+// Serendipity
+// See LICENSE file for license information.
 
 require_once __DIR__ . '/lib/bootstrap.php';
+
+use Serendipity\Routing;
 
 // We need to set this to return a 200 since we use .htaccess ErrorDocument
 // rules to handle archives.
@@ -11,7 +14,6 @@ header('Status: 200 OK');
 
 // Session are needed to also remember an autologin user on the frontend
 include('serendipity_config.inc.php');
-include('include/functions_routing.inc.php');
 header('Content-Type: text/html; charset='. LANG_CHARSET);
 
 if ($serendipity['CacheControl']) {
@@ -67,44 +69,45 @@ if (preg_match(PAT_APPROVE, $uri, $res) && $serendipity['serendipityAuthedUser']
     define('DATA_TRACKBACK_APPROVED', false);
 }
 
+$routing = new Routing($serendipity);
 if (preg_match(PAT_ARCHIVES, $uri, $matches) || isset($serendipity['GET']['range']) && is_numeric($serendipity['GET']['range'])) {
-    serveArchives();
+    $routing->serveArchives();
 } else if (preg_match(PAT_PERMALINK, $uri, $matches) ||
            preg_match(PAT_COMMENTSUB, $uri, $matches) ||
            isset($serendipity['GET']['id']) ||
            isset($_GET['p'])) {
-    serveEntry($matches);
+    $routing->serveEntry($matches);
 } elseif (preg_match(PAT_PERMALINK_FEEDCATEGORIES, $uri, $matches) || preg_match(PAT_PERMALINK_FEEDAUTHORS, $uri, $matches) || preg_match(PAT_FEEDS, $uri)) {
-    serveFeed($matches);
+    $routing->serveFeed($matches);
     exit;
 } else if (preg_match(PAT_PLUGIN, $uri, $matches)) {
-    servePlugin($matches);
+    $routing->servePlugin($matches);
     exit;
 } else if (preg_match(PAT_ADMIN, $uri)) {
-    gotoAdmin();
+    $routing->gotoAdmin();
     exit;
 } else if (preg_match(PAT_ARCHIVE, $uri)) {
-    serveArchive();
+    $routing->serveArchive();
 } else if ((isset($serendipity['POST']['isMultiCat']) && is_array($serendipity['POST']['multiCat'])) ||
             preg_match(PAT_PERMALINK_CATEGORIES, $uri, $matches)) {
-    serveCategory($matches);
+    $routing->serveCategory($matches);
 } else if (preg_match(PAT_PERMALINK_AUTHORS, $uri, $matches)) {
-    serveAuthorPage($matches);
+    $routing->serveAuthorPage($matches);
 } else if (preg_match(PAT_SEARCH, $uri, $matches)) {
-    serveSearch();
+    $routing->serveSearch();
 } elseif (preg_match(PAT_CSS, $uri, $matches)) {
-    serveCSS($matches[1]);
+    $routing->serveCSS($matches[1]);
     exit;
 } elseif (preg_match(PAT_JS, $uri, $matches)) {
-    serveJS($matches[1]);
+    $routing->serveJS($matches[1]);
     exit;
 } else if (preg_match(PAT_COMMENTS, $uri, $matches)) {
-    serveComments();
+    $routing->serveComments();
 } else if (preg_match('@/(index(\.php|\.html)?)|'. preg_quote($serendipity['indexFile']) .'@', $uri) ||
            preg_match('@^/' . preg_quote(trim($serendipity['serendipityHTTPPath'], '/')) . '/?(\?.*)?$@', $uri)) {
-    serveIndex();
+    $routing->serveIndex();
 } else {
-    serve404();
+    $routing->serve404();
 }
 
 if (empty($serendipity['smarty_file'])) {

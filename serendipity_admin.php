@@ -1,8 +1,11 @@
 <?php
-# Copyright (c) 2003-2005, Jannis Hermanns (on behalf the Serendipity Developer Team)
-# All rights reserved.  See LICENSE file for licensing details
+
+// Serendipity
+// See LICENSE file for license information.
 
 require_once __DIR__ . '/lib/bootstrap.php';
+
+use Serendipity\Routing;
 
 define('IN_installer', true);
 define('IN_upgrader', true);
@@ -36,8 +39,8 @@ if (isset($serendipity['GET']['adminModule']) && $serendipity['GET']['adminModul
             serendipity_login(true);
             if (serendipity_userLoggedIn()) {
                 // login with external authentication - reload page to set language settings correct for user
-                include_once S9Y_INCLUDE_PATH . 'include/functions_routing.inc.php';
-                gotoAdmin();
+                $routing = new Routing($serendipity);
+                $routing->gotoAdmin();
                 return true;
             }
         }
