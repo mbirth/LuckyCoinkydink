@@ -359,4 +359,16 @@ abstract class DbAbstract
     public function probe($hash, &$errs)
     {
     }
+
+    /**
+     * Check if we think that it is safe to ugprade to utf8mb4. This checks version numbers and applied settings.
+     * Depending on the version of mariadb/mysql we need to check either one or three settings. We check for
+     * innodb being available with fulltext index and large index support, so that our database scheme can work
+     *
+     * @return boolean   Whether the database could support utf8mb4
+     */
+    public function isUtf8mb4Ready()
+    {
+        return false;
+    }
 }
