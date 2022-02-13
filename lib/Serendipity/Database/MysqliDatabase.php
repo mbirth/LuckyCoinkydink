@@ -328,7 +328,7 @@ class MysqliDatabase extends DbAbstract
      *
      * @return boolean   Whether the database could support utf8mb4
      */
-    public function isUtf8mb4Ready()
+    public function isUtf8mb4Ready(): bool
     {
         $mysql_version = mysqli_get_server_info($this->db_conn);
         $maria = false;

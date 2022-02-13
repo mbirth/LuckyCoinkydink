@@ -82,7 +82,7 @@ function serendipity_db_begin_transaction()
     return $db->beginTransaction();
 }
 
-function serendipity_db_end_transaction($commit)
+function serendipity_db_end_transaction(bool $commit)
 {
     global $serendipity;
     $db = DbFactory::createFromConfig($serendipity);
@@ -96,7 +96,7 @@ function serendipity_db_in_sql($col, &$search_ids, $type = ' OR ')
     return $db->inSql($col, $search_ids, $type);
 }
 
-function serendipity_db_escape_string($string)
+function serendipity_db_escape_string(string $string): string
 {
     global $serendipity;
     $db = DbFactory::createFromConfig($serendipity);
@@ -166,7 +166,7 @@ function serendipity_db_probe($hash, &$errs)
     return $db->probe($hash, $errs);
 }
 
-function serendipity_utf8mb4_ready()
+function serendipity_utf8mb4_ready(): bool
 {
     global $serendipity;
     $db = DbFactory::createFromConfig($serendipity);
