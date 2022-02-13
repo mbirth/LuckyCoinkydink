@@ -140,7 +140,7 @@ class SqlRelayDatabase extends DbAbstract
         $this->db_cursor = $cur;
 
         if ($benchmark) {
-            $start = microtime_float();
+            $start = microtime(true);
         }
 
         if ($expectError) {
@@ -150,7 +150,7 @@ class SqlRelayDatabase extends DbAbstract
         }
 
         if ($benchmark) {
-            $end = microtime_float();
+            $end = microtime(true);
 
             $cur = sqlrcur_alloc($this->db_conn);
             $sql_b = "INSERT INTO BLOGLOG (request, timestamp, sql, exec_time, ip) VALUES ('" . $this->escapeString($_SERVER['REQUEST_URI']) . "', NOW(), '" . $this->escapeString($sql) . "', '" . (number_format($end-$start, 10)) . "', '" . $this->escapeString($_SERVER['REMOTE_ADDR']) . "')";

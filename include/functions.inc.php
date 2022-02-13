@@ -1240,20 +1240,6 @@ function serendipity_request_url($uri, $method = 'GET', $contenttype = null, $da
     return $fContent;
 }
 
-
-if (!function_exists('microtime_float')) {
-    /**
-     * Get current timestamp as microseconds
-     *
-     * @access public
-     * @return float    the time
-     */
-    function microtime_float() {
-        list($usec, $sec) = explode(" ", microtime());
-        return ((float)$usec + (float)$sec);
-    }
-}
-
 /**
  * Converts Array data to be used as a GET string
  *

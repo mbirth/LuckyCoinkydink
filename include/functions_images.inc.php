@@ -1578,7 +1578,7 @@ function serendipity_displayImageList($page = 0, $lineBreak = NULL, $manage = fa
         if ($debug) echo "<p>Got files: <pre>" . print_r($aFilesOnDisk, true) . "</pre></p>";
         $serendipity['current_image_hash'] = md5(serialize($aFilesOnDisk));
 
-        $nTimeStart = microtime_float();
+        $nTimeStart = microtime(true);
         // MTG 21/01/06: request all images from the database, delete any which don't exist
         // on the filesystem, and mark off files from the file list which are already
         // in the database
@@ -1689,7 +1689,7 @@ function serendipity_displayImageList($page = 0, $lineBreak = NULL, $manage = fa
         }
 
          /*
-         $nTimeEnd = microtime_float ( );
+         $nTimeEnd = microtime(true);
          $nDifference = $nTimeEnd - $nTimeStart;
          echo "<p> total time taken was " . $nDifference . "</p>";
         */
