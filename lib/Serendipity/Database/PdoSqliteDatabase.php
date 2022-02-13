@@ -119,12 +119,8 @@ class PdoSqliteDatabase extends DbAbstract
 
     /**
      * Returns an escaped string, so that it can be safely included in a SQL string encapsulated within quotes, without allowing SQL injection.
-     *
-     * @access  public
-     * @param   string   input string
-     * @return  string   output string
      */
-    public function escapeString($string)
+    public function escapeString(string $string): string
     {
         return substr($this->db_conn->quote($string), 1, -1);
     }

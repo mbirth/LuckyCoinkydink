@@ -11,7 +11,7 @@ class DbFactory
 {
     private static $db_instance = null;
 
-    public static function createFromConfig(&$serendipity)
+    public static function createFromConfig(&$serendipity): \Serendipity\Database\DbAbstract
     {
         if (self::$db_instance !== null) {
             // Already instantiated - return it

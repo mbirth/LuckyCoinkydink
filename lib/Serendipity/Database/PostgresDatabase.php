@@ -25,7 +25,7 @@ class PostgresDatabase extends DbAbstract
      * @access public
      * @param  boolean  If true, perform the query. If false, rollback.
      */
-    public function endTransaction($commit)
+    public function endTransaction(bool $commit)
     {
         if ($commit) {
             $this->query('commit');
@@ -88,12 +88,8 @@ class PostgresDatabase extends DbAbstract
 
     /**
      * Returns an escaped string, so that it can be safely included in a SQL string encapsulated within quotes, without allowing SQL injection.
-     *
-     * @access  public
-     * @param   string   input string
-     * @return  string   output string
      */
-    public function escapeString($string)
+    public function escapeString(string $string): string
     {
         return pg_escape_string($string);
     }
@@ -283,7 +279,7 @@ class PostgresDatabase extends DbAbstract
     }
 
     /**
-     * Prepares a Serendipty query input to fully valid SQL. Replaces certain "template" variables.
+     * Prepares a Serendipity query input to fully valid SQL. Replaces certain "template" variables.
      *
      * @access public
      * @param  string   SQL query with template variables to convert

@@ -5,40 +5,10 @@
 
 namespace Serendipity\Database;
 
-use Serendipity\Database\DbAbstract;
+use Serendipity\Database\Sqlite3Database;
 
-class Sqlite3ooDatabase extends DbAbstract
+class Sqlite3ooDatabase extends Sqlite3Database
 {
-    // SQLite3 only fetches by assoc, we will emulate the other result types
-    public const SQLITE3_ASSOC = 0;
-    public const SQLITE3_NUM = 1;
-    public const SQLITE3_BOTH = 2;
-    
-    /**
-     * Tells the DB Layer to start a DB transaction.
-     *
-     * @access public
-     */
-    public function beginTransaction()
-    {
-        $this->query('begin transaction');
-    }
-
-    /**
-     * Tells the DB Layer to end a DB transaction.
-     *
-     * @access public
-     * @param  boolean  If true, perform the query. If false, rollback.
-     */
-    public function endTransaction($commit)
-    {
-        if ($commit) {
-            $this->query('commit transaction');
-        } else {
-            $this->query('rollback transaction');
-        }
-    }
-
     /**
      * Connect to the configured Database
      *
@@ -58,21 +28,6 @@ class Sqlite3ooDatabase extends DbAbstract
     }
 
     /**
-     * Returns an escaped string, so that it can be safely included in a SQL string encapsulated within quotes, without allowing SQL injection.
-     *
-     * @access  public
-     * @param   string   input string
-     * @return  string   output string
-     */
-    public function escapeString($string)
-    {
-        static $search  = array("\x00", '%',   "'",   '\"');
-        static $replace = array('%00',  '%25', "''", '\\\"');
-
-        return str_replace($search, $replace, $string);
-    }
-
-    /**
      * Returns the number of affected rows of a SQL query
      *
      * @access public
@@ -81,30 +36,6 @@ class Sqlite3ooDatabase extends DbAbstract
     public function affectedRows()
     {
         return $this->db_conn->changes();
-    }
-
-    /**
-     * Returns the number of updated rows in a SQL query
-     *
-     * @access public
-     * @return int  Number of updated rows
-     */
-    public function updatedRows()
-    {
-        // It is unknown whether sqllite returns rows MATCHED or rows UPDATED
-        return $this->db_conn->changes();
-    }
-
-    /**
-     * Returns the number of matched rows in a SQL query
-     *
-     * @access public
-     * @return int  Number of matched rows
-     */
-    public function matchedRows()
-    {
-        // It is unknown whether sqllite returns rows MATCHED or rows UPDATED
-        return $this->db_conn->changes($this->db_conn);
     }
 
     /**
@@ -130,7 +61,7 @@ class Sqlite3ooDatabase extends DbAbstract
      * @param  int          Bitmask to tell whether to fetch numerical/associative arrays
      * @return array        Propper array containing the resource results
      */
-    public function sqlite_fetch_array($res, $type = self::SQLITE3_BOTH)
+    public function fetchArray($res, $type = self::SQLITE3_BOTH)
     {
         static $search  = array('%00',  '%25');
         static $replace = array("\x00", '%');
@@ -172,30 +103,6 @@ class Sqlite3ooDatabase extends DbAbstract
         }
 
         return $frow;
-    }
-
-    /**
-     * Assemble and return SQL condition for a "IN (...)" clause
-     *
-     * @access public
-     * @param  string   table column name
-     * @param  array    referenced array of values to search for in the "IN (...)" clause
-     * @param  string   condition of how to associate the different input values of the $search_ids parameter
-     * @return string   resulting SQL string
-     */
-    public function inSql($col, &$search_ids, $type = ' OR ')
-    {
-        $sql = array();
-        if (!is_array($search_ids)) {
-            return false;
-        }
-
-        foreach ($search_ids as $id) {
-            $sql[] = $col . ' = ' . $id;
-        }
-
-        $cond = '(' . implode($type, $sql) . ')';
-        return $cond;
     }
 
     /**
@@ -337,68 +244,5 @@ class Sqlite3ooDatabase extends DbAbstract
 
         $errs[] = "Unable to open \"$dbfile\" - check permissions (directory needs to be writeable for webserver)!";
         return false;
-    }
-
-    /**
-     * Prepares a Serendipty query input to fully valid SQL. Replaces certain "template" variables.
-     *
-     * @access public
-     * @param  string   SQL query with template variables to convert
-     * @return resource    SQL resource handle of the executed query
-     */
-    public function schemaImport($query)
-    {
-        static $search  = array('{AUTOINCREMENT}', '{PRIMARY}', '{UNSIGNED}', '{FULLTEXT}', '{BOOLEAN}', '{UTF_8}', '{TEXT}');
-        static $replace = array('INTEGER AUTOINCREMENT', 'PRIMARY KEY', '', '', 'BOOLEAN NOT NULL', '', 'LONGTEXT');
-
-        if (stristr($query, '{FULLTEXT_MYSQL}')) {
-            return true;
-        }
-
-        $query = trim(str_replace($search, $replace, $query));
-        $query = str_replace('INTEGER AUTOINCREMENT PRIMARY KEY', 'INTEGER PRIMARY KEY AUTOINCREMENT', $query);
-        if ($query[0] == '@') {
-            // Errors are expected to happen (like duplicate index creation)
-            return $this->query(substr($query, 1), false, 'both', false, false, false, true);
-        } else {
-            return $this->query($query);
-        }
-    }
-
-    /**
-     * Returns the option to a LIMIT SQL statement, because it varies across DB systems
-     *
-     * @access public
-     * @param  int      Number of the first row to return data from
-     * @param  int      Number of rows to return
-     * @return string   SQL string to pass to a LIMIT statement
-     */
-    public function limit($start, $offset)
-    {
-        return $start . ', ' . $offset;
-    }
-
-    /**
-     * Return a LIMIT SQL option to the DB Layer as a full LIMIT statement
-     *
-     * @access public
-     * @param   SQL string of a LIMIT option
-     * @return  SQL string containing a full LIMIT statement
-     */
-    public function limitSql($limitstring)
-    {
-        return ' LIMIT ' . $limitstring;
-    }
-
-    /**
-     * Returns the SQL code used for concatenating strings
-     *
-     * @access public
-     * @param  string   Input string/column to concatenate
-     * @return string   SQL parameter
-     */
-    public function concat($string)
-    {
-        return 'concat(' . $string . ')';
     }
 }

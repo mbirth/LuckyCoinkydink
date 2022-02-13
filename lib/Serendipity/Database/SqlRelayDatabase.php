@@ -43,9 +43,9 @@ class SqlRelayDatabase extends DbAbstract
      * Tells the DB Layer to end a DB transaction.
      *
      * @access public
-     * @param  boolean  If true, perform the query. If false, rollback.
+     * @param  boolean  $commit If true, perform the query. If false, rollback.
      */
-    public function endTransaction($commit)
+    public function endTransaction(bool $commit)
     {
         if ($commit) {
             sqlrcon_commit($this->db_conn);
@@ -321,12 +321,8 @@ class SqlRelayDatabase extends DbAbstract
 
     /**
      * Returns an escaped string, so that it can be safely included in a SQL string encapsulated within quotes, without allowing SQL injection.
-     *
-     * @access  public
-     * @param   string   input string
-     * @return  string   output string
      */
-    public function escapeString($str)
+    public function escapeString(string $string): string
     {
         static $search  = array("\x00", '%',   "'",   '\"');
         static $replace = array('%00',  '%25', "''", '\\\"');

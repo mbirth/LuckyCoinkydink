@@ -25,7 +25,7 @@ class SqliteDatabase extends DbAbstract
      * @access public
      * @param  boolean  If true, perform the query. If false, rollback.
      */
-    public function endTransaction($commit)
+    public function endTransaction(bool $commit)
     {
         if ($commit) {
             $this->query('commit transaction');
@@ -63,12 +63,8 @@ class SqliteDatabase extends DbAbstract
 
     /**
      * Returns an escaped string, so that it can be safely included in a SQL string encapsulated within quotes, without allowing SQL injection.
-     *
-     * @access  public
-     * @param   string   input string
-     * @return  string   output string
      */
-    public function escapeString($string)
+    public function escapeString(string $string): string
     {
         static $search  = array("\x00", '%',   "'",   '\"');
         static $replace = array('%00',  '%25', "''", '\\\"');

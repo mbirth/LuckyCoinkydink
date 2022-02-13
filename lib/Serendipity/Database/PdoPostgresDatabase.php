@@ -26,7 +26,7 @@ class PdoPostgresDatabase extends DbAbstract
      * @access public
      * @param  boolean  If true, perform the query. If false, rollback.
      */
-    public function endTransaction($commit)
+    public function endTransaction(bool $commit)
     {
         if ($commit) {
             $this->db_conn->commit();
@@ -82,13 +82,9 @@ class PdoPostgresDatabase extends DbAbstract
     }
 
     /**
-     * Returns a escaped string, so that it can be safely included in a SQL string encapsulated within quotes, without allowing SQL injection.
-     *
-     * @access  public
-     * @param   string   input string
-     * @return  string   output string
+     * Returns an escaped string, so that it can be safely included in a SQL string encapsulated within quotes, without allowing SQL injection.
      */
-    public function escapeString($string)
+    public function escapeString(string $string): string
     {
         return substr($this->db_conn->quote($string), 1, -1);
     }

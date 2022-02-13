@@ -30,7 +30,7 @@ class Sqlite3Database extends DbAbstract
      * @access public
      * @param  boolean  If true, perform the query. If false, rollback.
      */
-    public function endTransaction($commit)
+    public function endTransaction(bool $commit)
     {
         if ($commit) {
             $this->query('commit transaction');
@@ -58,13 +58,9 @@ class Sqlite3Database extends DbAbstract
     }
 
     /**
-     * Returns a escaped string, so that it can be safely included in a SQL string encapsulated within quotes, without allowing SQL injection.
-     *
-     * @access  public
-     * @param   string   input string
-     * @return  string   output string
+     * Returns an escaped string, so that it can be safely included in a SQL string encapsulated within quotes, without allowing SQL injection.
      */
-    public function escapeString($string)
+    public function escapeString(string $string): string
     {
         static $search  = array("\x00", '%',   "'",   '\"');
         static $replace = array('%00',  '%25', "''", '\\\"');
@@ -92,7 +88,7 @@ class Sqlite3Database extends DbAbstract
     public function updatedRows()
     {
         // It is unknown whether sqllite returns rows MATCHED or rows UPDATED
-        return sqlite3_changes($this->db_conn);
+        return $this->affectedRows();
     }
 
     /**
@@ -104,7 +100,7 @@ class Sqlite3Database extends DbAbstract
     public function matchedRows()
     {
         // It is unknown whether sqllite returns rows MATCHED or rows UPDATED
-        return sqlite3_changes($this->db_conn);
+        return $this->affectedRows;
     }
 
     /**
@@ -326,7 +322,7 @@ class Sqlite3Database extends DbAbstract
     }
 
     /**
-     * Prepares a Serendipty query input to fully valid SQL. Replaces certain "template" variables.
+     * Prepares a Serendipity query input to fully valid SQL. Replaces certain "template" variables.
      *
      * @access public
      * @param  string   SQL query with template variables to convert
