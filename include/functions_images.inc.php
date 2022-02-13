@@ -2,6 +2,8 @@
 # Copyright (c) 2003-2005, Jannis Hermanns (on behalf the Serendipity Developer Team)
 # All rights reserved.  See LICENSE file for licensing details
 
+use Serendipity\ContentCache;
+
 if (IN_serendipity !== true) {
     die ("Don't hack!");
 }
@@ -651,7 +653,8 @@ function serendipity_insertImageInDatabase($filename, $directory, $authorid = 0,
     $image_id = serendipity_db_insert_id('images', 'id');
     if ($image_id > 0) {
         return $image_id;
-        serendipity_cleanCache();
+        $cache = ContentCache::getInstance();
+        $cache->clearCache();
     }
 
     return 0;
@@ -1973,7 +1976,8 @@ function serendipity_traversePath($basedir, $dir='', $onlyDirs = true, $pattern 
     
     if ($serendipity['useInternalCache']) {
         $key = md5($basedir . $dir . $onlyDirs . $pattern . $depth . $max_depth . $apply_ACL . serialize($aExcludeDirs) . $serendipity['serendipityUser']);
-        $files = serendipity_getCacheItem($key);
+        $cache = ContentCache::getInstance();
+        $files = $cache->getItem($key);
         if ($files && $files !== false) {
             return unserialize($files);
         }
@@ -2027,7 +2031,8 @@ function serendipity_traversePath($basedir, $dir='', $onlyDirs = true, $pattern 
     if ($serendipity['useInternalCache']) {
         $key = md5($basedir . $dir . $onlyDirs . $pattern . $depth . $max_depth . $apply_ACL . serialize($aExcludeDirs) . $serendipity['serendipityUser']);
 
-        serendipity_cacheItem($key, serialize($files));
+        $cache = ContentCache::getInstance();
+        $cache->addItem($key, serialize($files));
     }
 
     return $files;
@@ -2294,7 +2299,8 @@ function serendipity_renameDir($oldDir, $newDir) {
             );
             serendipity_updateImageInEntries($image['id'], $image);
         }
-        serendipity_cleanCache();
+        $cache = ContentCache::getInstance();
+        $cache->clearCache();
         return true;
     }
     return false;
@@ -2349,7 +2355,8 @@ function serendipity_renameFile($id, $newName, $path = null) {
     } else {
         return '<span class="msg_error"><span class="icon-attention-circled" aria-hidden="true"></span> ' . MEDIA_RENAME_FAILED . "</span>\n";
     }
-    serendipity_cleanCache();
+    $cache = ContentCache::getInstance();
+    $cache->clearCache();
     return TRUE;
 }
 

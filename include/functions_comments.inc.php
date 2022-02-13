@@ -2,6 +2,8 @@
 # Copyright (c) 2003-2005, Jannis Hermanns (on behalf the Serendipity Developer Team)
 # All rights reserved.  See LICENSE file for licensing details
 
+use Serendipity\ContentCache;
+
 if (IN_serendipity !== true) {
     die ("Don't hack!");
 }
@@ -730,7 +732,8 @@ function serendipity_approveComment($cid, $entry_id, $force = false, $moderate =
 
         serendipity_plugin_api::hook_event('backend_approvecomment', $rs);
     }
-    serendipity_cleanCache();
+    $cache = ContentCache::getInstance();
+    $cache->clearCache();
     if ($flip) {
         if ($moderate) return -1; // comment set to pending
         if (!$moderate) return 1; // comment set to approved
@@ -950,7 +953,8 @@ function serendipity_insertComment($id, $commentInfo, $type = 'NORMAL', $source 
     if ($GLOBALS['tb_logging'] ?? false) {
         fclose($fp);
     }
-    serendipity_cleanCache();
+    $cache = ContentCache::getInstance();
+    $cache->clearCache();
     return $cid;
 }
 
