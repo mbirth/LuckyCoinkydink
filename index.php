@@ -69,7 +69,7 @@ if (preg_match(PAT_APPROVE, $uri, $res) && $serendipity['serendipityAuthedUser']
     define('DATA_TRACKBACK_APPROVED', false);
 }
 
-$routing = new Routing($serendipity);
+$routing = new Routing();
 if (preg_match(PAT_ARCHIVES, $uri, $matches) || isset($serendipity['GET']['range']) && is_numeric($serendipity['GET']['range'])) {
     $routing->serveArchives();
 } else if (preg_match(PAT_PERMALINK, $uri, $matches) ||

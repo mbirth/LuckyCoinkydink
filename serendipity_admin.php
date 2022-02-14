@@ -39,7 +39,7 @@ if (isset($serendipity['GET']['adminModule']) && $serendipity['GET']['adminModul
             serendipity_login(true);
             if (serendipity_userLoggedIn()) {
                 // login with external authentication - reload page to set language settings correct for user
-                $routing = new Routing($serendipity);
+                $routing = new Routing();
                 $routing->gotoAdmin();
                 return true;
             }

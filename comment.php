@@ -37,7 +37,7 @@ if (!empty($_REQUEST['c']) && !empty($_REQUEST['hash'])) {
         'subscribe_confirm_error'				=> !$res,
         'subscribe_confirm_success'				=> $res,
     );
-    $pg = new PageGenerator($serendipity);
+    $pg = new PageGenerator();
     $pg->render();
     $serendipity['smarty']->display(serendipity_getTemplateFile('index.tpl', 'serendipityPath'));
     exit;
@@ -52,7 +52,7 @@ if (!empty($_REQUEST['optin'])) {
         'subscribe_confirm_error'				=> !$res,
         'subscribe_confirm_success'				=> $res,
     );
-    $pg = new PageGenerator($serendipity);
+    $pg = new PageGenerator();
     $pg->render();
     $serendipity['smarty']->display(serendipity_getTemplateFile('index.tpl', 'serendipityPath'));
     exit;

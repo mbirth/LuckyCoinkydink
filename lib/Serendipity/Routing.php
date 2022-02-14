@@ -5,40 +5,45 @@
 
 namespace Serendipity;
 
+use Serendipity\ConfigContainer;
 use Serendipity\PageGenerator;
 
 class Routing
 {
     protected $serendipity;
 
-    public function __construct(&$serendipity)
+    public function __construct()
     {
-        $this->serendipity =& $serendipity;
+        // FIXME: Temporary workaround while fixing this class
+        $cfg = ConfigContainer::getInstance();
+        $this->serendipity =& $cfg->getSerendipity();
     }
 
     public function serveIndex()
     {
-        $this->serendipity['view'] = 'start';
+        $cfg = ConfigContainer::getInstance();
+        $cfg->set('view', 'start');
 
-        if ($this->serendipity['GET']['action'] == 'search') {
-            $this->serendipity['view'] = 'search';
-            $this->serendipity['uriArguments'] = array(PATH_SEARCH, urlencode($this->serendipity['GET']['searchTerm']));
+        if ($cfg->get('GET')['action'] == 'search') {
+            $cfg->set('view', 'search');
+            $cfg->set('uriArguments', array(PATH_SEARCH, urlencode($this->serendipity['GET']['searchTerm'])));
         } else {
-            $this->serendipity['uriArguments'][] = PATH_ARCHIVES;
+            $cfg->getByRef('uriArguments')[] = PATH_ARCHIVES;
         }
 
-        $pg = new PageGenerator($this->serendipity);
+        $pg = new PageGenerator();
         $pg->render();
     }
 
     public function serve404()
     {
-        $this->serendipity['view'] = '404';
-        $this->serendipity['viewtype'] = '404_4';
-        $this->serendipity['content_message'] = URL_NOT_FOUND;
+        $cfg = ConfigContainer::getInstance();
+        $cfg->set('view', '404');
+        $cfg->set('viewtype', '404_4');
+        $cfg->set('content_message', URL_NOT_FOUND);
         header('HTTP/1.0 404 Not found');
         header('Status: 404 Not found');
-        $pg = new PageGenerator($this->serendipity);
+        $pg = new PageGenerator();
         $pg->render();
     }
 
@@ -136,7 +141,7 @@ class Routing
         $this->serendipity['head_subtitle'] = $this->serendipity['blogTitle'];
         $this->serendipity['GET']['action']     = 'comments';
 
-        $pg = new PageGenerator($this->serendipity);
+        $pg = new PageGenerator();
         $pg->render();
     }
 
@@ -159,7 +164,7 @@ class Routing
         // the fix below
         $this->serendipity['GET']['action'] = 'empty';
 
-        $pg = new PageGenerator($this->serendipity);
+        $pg = new PageGenerator();
         $pg->render();
 
         // HOTFIX: The staticpage plugin spews out a 404 error in the genpage hook,
@@ -215,7 +220,7 @@ class Routing
         $this->serendipity['GET']['action']     = 'search';
         $this->serendipity['GET']['searchTerm'] = urldecode(serendipity_specialchars(strip_tags(implode(' ', $search))));
 
-        $pg = new PageGenerator($this->serendipity);
+        $pg = new PageGenerator();
         $pg->render();
     }
 
@@ -245,7 +250,7 @@ class Routing
             $this->serendipity['head_subtitle'] = $this->serendipity['blogTitle'];
         }
 
-        $pg = new PageGenerator($this->serendipity);
+        $pg = new PageGenerator();
         $pg->render();
     }
 
@@ -290,7 +295,7 @@ class Routing
             $this->serendipity['head_subtitle'] = $this->serendipity['blogTitle'];
         }
 
-        $pg = new PageGenerator($this->serendipity);
+        $pg = new PageGenerator();
         $pg->render();
     }
 
@@ -301,7 +306,7 @@ class Routing
 
         $this->locateHiddenVariables($this->serendipity['uriArguments']);
 
-        $pg = new PageGenerator($this->serendipity);
+        $pg = new PageGenerator();
         $pg->render();
     }
 
@@ -319,7 +324,7 @@ class Routing
         $this->serendipity['view'] = 'plugin';
 
         if (strpos($matches[2], 'admin/')  !== false) {
-            $pg = new PageGenerator($this->serendipity);
+            $pg = new PageGenerator();
             $pg->render();
         }
 
@@ -415,7 +420,7 @@ class Routing
             header('Status: 404 Not found');
         }
 
-        $pg = new PageGenerator($this->serendipity);
+        $pg = new PageGenerator();
         $pg->render();
     }
 
@@ -509,7 +514,7 @@ class Routing
             $this->serendipity['head_subtitle'] .= sprintf(ENTRIES_FOR, $date);
         }
 
-        $pg = new PageGenerator($this->serendipity);
+        $pg = new PageGenerator();
         $pg->render();
     }
 }

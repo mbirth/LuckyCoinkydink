@@ -6,7 +6,7 @@ if (IN_serendipity !== true) {
     die ("Don't hack!");
 }
 
-$serendipity = array();
+#$serendipity = array();
 
 if (!defined('PATH_SEPARATOR')) {
     if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {

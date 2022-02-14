@@ -5,6 +5,7 @@
 
 namespace Serendipity;
 
+use Serendipity\ConfigContainer;
 use voku\cache\Cache;
 use voku\cache\CacheAdapterAutoManager;
 use voku\cache\AdapterArray;
@@ -23,14 +24,14 @@ class ContentCache
         }
         return self::$instance;
     }
-    
+
     private function __construct()
     {
         // Configure voku/simple-cache to use templates_c as directory for the opcache files, the fallback
         // when Memcached and Redis are not used.
-        // FIXME: Bad hack - remove when no longer needed!
-        global $serendipity;
-        $cacheDir = $serendipity['serendipityPath'] . '/templates_c/simple_cache';
+
+        $cfg = ConfigContainer::getInstance();
+        $cacheDir = $cfg->get('serendipityPath') . '/templates_c/simple_cache';
 
         $this->cache_manager = new CacheAdapterAutoManager();
         $this->cache_manager->addAdapter(
@@ -63,12 +64,12 @@ class ContentCache
     {
         return $this->cache->setItem($key, $item, $ttl);
     }
-    
+
     public function getItem($key)
     {
         return $this->cache->getItem($key);
     }
-    
+
     public function clearCache()
     {
         return $this->cache->removeAll();

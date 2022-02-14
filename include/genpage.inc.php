@@ -6,5 +6,5 @@
 
 use Serendipity\PageGenerator;
 
-$pg = new PageGenerator($serendipity);
+$pg = new PageGenerator();
 $pg->render();
