@@ -20,7 +20,7 @@ class DbTools
      * @param  string   input value to compare
      * @return boolean  boolean conversion of the input value
      */
-    public function bool($val)
+    public static function bool($val)
     {
         if (($val === true) || ($val == 'true') || ($val == 't') || ($val == '1')) {
             return true;
