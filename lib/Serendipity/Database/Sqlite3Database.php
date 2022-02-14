@@ -60,7 +60,7 @@ class Sqlite3Database extends DbAbstract
     /**
      * Returns an escaped string, so that it can be safely included in a SQL string encapsulated within quotes, without allowing SQL injection.
      */
-    public function escapeString(string $string): string
+    public function escapeString($string): string
     {
         static $search  = array("\x00", '%',   "'",   '\"');
         static $replace = array('%00',  '%25', "''", '\\\"');

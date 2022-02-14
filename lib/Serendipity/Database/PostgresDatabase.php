@@ -89,7 +89,7 @@ class PostgresDatabase extends DbAbstract
     /**
      * Returns an escaped string, so that it can be safely included in a SQL string encapsulated within quotes, without allowing SQL injection.
      */
-    public function escapeString(string $string): string
+    public function escapeString($string): string
     {
         return pg_escape_string($string);
     }
