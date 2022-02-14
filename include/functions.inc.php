@@ -1149,9 +1149,9 @@ function serendipity_request_url($uri, $method = 'GET', $contenttype = null, $da
 
     require_once S9Y_PEAR_PATH . 'HTTP/Request2.php';
     $options = array('follow_redirects' => true, 'max_redirects' => 5);
-    
+
     if (is_array($extra_options)) {
-        foreach($extra_options AS $okey => $oval) {
+        foreach ($extra_options as $okey => $oval) {
             $options[$okey] = $oval;
         }
     }
@@ -1162,7 +1162,7 @@ function serendipity_request_url($uri, $method = 'GET', $contenttype = null, $da
         $options['ssl_verify_peer'] = false;
     }
 
-    switch(strtoupper($method)) {
+    switch (strtoupper($method)) {
         case 'GET':
             $http_method = HTTP_Request2::METHOD_GET;
             break;
