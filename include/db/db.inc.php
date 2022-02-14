@@ -6,6 +6,7 @@
 // FIXME: THIS IS A SHIM FOR BACKWARDS COMPATIBILITY - REMOVE WHEN NO LONGER NEEDED
 
 use Serendipity\Database\DbFactory;
+use Serendipity\Database\DbTools;
 
 // SQLite3 only fetches by assoc, we will emulate the other result types
 define(SQLITE3_ASSOC, 0);
@@ -42,9 +43,7 @@ function serendipity_db_insert($table, $values, $action = 'execute')
 
 function serendipity_db_bool($val)
 {
-    global $serendipity;
-    $db = DbFactory::createFromConfig($serendipity);
-    return $db->bool($val);
+    return DbTools::bool($val);
 }
 
 function serendipity_db_get_interval($val, $ival = 900)
