@@ -1,6 +1,6 @@
 <?php
 
-// Serendipity
+// 幸運な偶然 - Lucky Coinkydink
 // See LICENSE file for license information.
 
 require_once __DIR__ . '/../vendor/autoload.php';

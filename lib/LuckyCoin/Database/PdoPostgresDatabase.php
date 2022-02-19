@@ -1,13 +1,14 @@
 <?php
 
-// Serendipity
+// 幸運な偶然 - Lucky Coinkydink
 // See LICENSE file for license information.
 
-namespace Serendipity\Database;
+namespace LuckyCoin\Database;
 
-use Serendipity\Database\DbAbstract;
+use LuckyCoin\Database\DbAbstract;
+use PDO;
 
-class PostgresDatabase extends DbAbstract
+class PdoPostgresDatabase extends DbAbstract
 {
     /**
      * Tells the DB Layer to start a DB transaction.
@@ -16,7 +17,7 @@ class PostgresDatabase extends DbAbstract
      */
     public function beginTransaction()
     {
-        $this->query('begin work');
+        $this->db_conn->beginTransaction();
     }
 
     /**
@@ -28,9 +29,9 @@ class PostgresDatabase extends DbAbstract
     public function endTransaction(bool $commit)
     {
         if ($commit) {
-            $this->query('commit');
+            $this->db_conn->commit();
         } else {
-            $this->query('rollback');
+            $this->db_conn->rollback();
         }
     }
 
@@ -56,31 +57,25 @@ class PostgresDatabase extends DbAbstract
      */
     public function connect()
     {
-        if (isset($this->serendipity['dbPersistent']) && $this->serendipity['dbPersistent']) {
-            $function = 'pg_pconnect';
-        } else {
-            $function = 'pg_connect';
-        }
-
         $host = $port = '';
         if (strlen($this->db_hostname)) {
             if (false !== strstr($this->db_hostname, ':')) {
                 $tmp = explode(':', $this->db_hostname);
-                $host = "host={$tmp[0]} ";
-                $port = "port={$tmp[1]} ";
+                $host = "host={$tmp[0]};";
+                $port = "port={$tmp[1]};";
             } else {
-                $host = "host={$this->db_hostname} ";
+                $host = "host={$this->db_hostname};";
             }
         }
 
-        $this->db_conn = $function(
+        $this->db_conn = new \PDO(
             sprintf(
-                '%sdbname=%s user=%s password=%s',
+                'pgsql:%sdbname=%s',
                 "$host$port",
-                $this->db_name,
-                $this->db_username,
-                $this->db_password
-            )
+                $this->db_name
+            ),
+            $this->db_username,
+            $this->db_password
         );
 
         return $this->db_conn;
@@ -91,7 +86,7 @@ class PostgresDatabase extends DbAbstract
      */
     public function escapeString($string): string
     {
-        return pg_escape_string($string);
+        return substr($this->db_conn->quote($string), 1, -1);
     }
 
     /**
@@ -133,7 +128,7 @@ class PostgresDatabase extends DbAbstract
      */
     public function affectedRows()
     {
-        return pg_affected_rows($this->serendipity['dbLastResult']);
+        return $this->serendipity['dbSth']->rowCount();
     }
 
     /**
@@ -146,7 +141,7 @@ class PostgresDatabase extends DbAbstract
     {
         // it is unknown whether pg_affected_rows returns number of rows
         //  UPDATED or MATCHED on an UPDATE statement.
-        return pg_affected_rows($this->serendipity['dbLastResult']);
+        return $this->serendipity['dbSth']->rowCount();
     }
 
     /**
@@ -159,7 +154,7 @@ class PostgresDatabase extends DbAbstract
     {
         // it is unknown whether pg_affected_rows returns number of rows
         //  UPDATED or MATCHED on an UPDATE statement.
-        return pg_affected_rows($this->serendipity['dbLastResult']);
+        return $this->serendipity['dbSth']->rowCount();
     }
 
     /**
@@ -174,16 +169,15 @@ class PostgresDatabase extends DbAbstract
     {
         if (empty($table) || empty($id)) {
             // BC - will/should never be called with empty parameters!
-            return pg_last_oid($this->serendipity['dbLastResult']);
+            return $this->db_conn->lastInsertId();
         } else {
             $query = "SELECT currval('{$this->db_prefix}{$table}_{$id}_seq'::text) AS {$id}";
-            $res   = pg_query($this->db_conn, $query);
-            if (pg_num_rows($res)) {
-                $insertId = pg_fetch_array($res, 0, PGSQL_ASSOC);
-                return $insertId[$id];
-            } else {
-                return pg_last_oid($this->serendipity['dbLastResult']); // BC - should not happen!
+            $res = $this->db_conn->prepare($query);
+            $res->execute();
+            foreach ($res->fetchAll(PDO::FETCH_ASSOC) as $row) {
+                return $row[$id];
             }
+            return $this->db_conn->lastInsertId();
         }
     }
 
@@ -210,72 +204,64 @@ class PostgresDatabase extends DbAbstract
     public function &query($sql, $single = false, $result_type = "both", $reportErr = false, $assocKey = false, $assocVal = false, $expectError = false)
     {
         $type_map = array(
-            'assoc' => PGSQL_ASSOC,
-            'num'   => PGSQL_NUM,
-            'both'  => PGSQL_BOTH,
+            'assoc' => PDO::FETCH_ASSOC,
+            'num'   => PDO::FETCH_NUM,
+            'both'  => PDO::FETCH_BOTH,
             'true'  => true,
             'false' => false
         );
 
-        if (!isset($this->serendipity['dbPgsqlOIDS'])) {
-            $this->serendipity['dbPgsqlOIDS'] = true;
-            @$this->query('SET default_with_oids = true', true, 'both', false, false, false, true);
-        }
-
         if (!$expectError && ($reportErr || !$this->serendipity['production'])) {
-            $this->serendipity['dbLastResult'] = pg_query($this->db_conn, $sql);
+            $this->serendipity['dbSth'] = $this->db_conn->prepare($sql);
         } else {
-            $this->serendipity['dbLastResult'] = @pg_query($this->db_conn, $sql);
+            $this->serendipity['dbSth'] = $this->db_conn->prepare($sql);
         }
 
-        if (!$this->serendipity['dbLastResult']) {
+        if (!$this->serendipity['dbSth']) {
             if (!$expectError && !$this->serendipity['production']) {
                 print "<span class='msg_error'>Error in $sql</span>";
-                print pg_last_error($this->db_conn) . "<BR/>\n";
+                print $this->db_conn->errorInfo() . "<BR/>\n";
                 if (function_exists('debug_backtrace')) {
                     highlight_string(var_export(debug_backtrace(), 1));
                 }
-                print "<pre>$sql</pre>";
+                print "<pre>$sql</pre>\n";
             }
             return $type_map['false'];
         }
 
-        if ($this->serendipity['dbLastResult'] === true) {
+        $this->serendipity['dbSth']->execute();
+
+        if ($this->serendipity['dbSth'] === true) {
             return $type_map['true'];
         }
 
         $result_type = $type_map[$result_type];
 
-        $n = pg_num_rows($this->serendipity['dbLastResult']);
+        $n = 0;
 
-        switch ($n) {
-            case 0:
-                if ($single) {
-                    return $type_map['false'];
+        $rows = array();
+        foreach ($this->serendipity['dbSth']->fetchAll($result_type) as $row) {
+            if (!empty($assocKey)) {
+                // You can fetch a key-associated array via the two function parameters assocKey and assocVal
+                if (empty($assocVal)) {
+                    $rows[$row[$assocKey]] = $row;
+                } else {
+                    $rows[$row[$assocKey]] = $row[$assocVal];
                 }
-                return $type_map['true'];
-
-            case 1:
-                if ($single) {
-                    return pg_fetch_array($this->serendipity['dbLastResult'], 0, $result_type);
-                }
-            default:
-                $rows = array();
-                for ($i = 0; $i < $n; $i++) {
-                    if (!empty($assocKey)) {
-                        // You can fetch a key-associated array via the two function parameters assocKey and assocVal
-                        $row = pg_fetch_array($this->serendipity['dbLastResult'], $i, $result_type);
-                        if (empty($assocVal)) {
-                            $rows[$row[$assocKey]] = $row;
-                        } else {
-                            $rows[$row[$assocKey]] = $row[$assocVal];
-                        }
-                    } else {
-                        $rows[] = pg_fetch_array($this->serendipity['dbLastResult'], $i, $result_type);
-                    }
-                }
-                return $rows;
+            } else {
+                $rows[] = $row;
+            }
         }
+        if (count($rows) == 0) {
+            if ($single) {
+                return $type_map['false'];
+            }
+            return $type_map['true'];
+        }
+        if (count($rows) == 1 && $single) {
+            return $rows[0];
+        }
+        return $rows;
     }
 
     /**
@@ -315,19 +301,19 @@ class PostgresDatabase extends DbAbstract
      */
     public function probe($hash, &$errs)
     {
-        if (!function_exists('pg_connect')) {
-            $errs[] = 'No PostgreSQL extension found. Please check your webserver installation or contact your systems administrator regarding this problem.';
+        if (!in_array('pgsql', PDO::getAvailableDrivers())) {
+            $errs[] = 'PDO_PGSQL driver not avialable';
             return false;
         }
 
-        $this->db_conn = pg_connect(
+        $this->db_conn = new PDO(
             sprintf(
-                '%sdbname=%s user=%s password=%s',
-                strlen($hash['dbHost']) ? ('host=' . $hash['dbHost'] . ' ') : '',
-                $hash['dbName'],
-                $hash['dbUser'],
-                $hash['dbPass']
-            )
+                'pgsql:%sdbname=%s',
+                strlen($hash['dbHost']) ? ('host=' . $hash['dbHost'] . ';') : '',
+                $hash['dbName']
+            ),
+            $hash['dbUser'],
+            $hash['dbPass']
         );
 
         if (!$this->db_conn) {

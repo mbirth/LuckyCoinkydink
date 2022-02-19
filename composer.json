@@ -1,6 +1,6 @@
 {
-    "name": "serendipity/s9y",
-    "description": "A reliable, secure and extensible PHP blog",
+    "name": "mbirth/luckycoinkydink",
+    "description": "Blog based on Serendipity",
     "repositories": [
         {
             "type": "composer",

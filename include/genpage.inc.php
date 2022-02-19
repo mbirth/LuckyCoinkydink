@@ -1,10 +1,10 @@
 <?php
 
-// Serendipity
+// Lucky Coinkydink
 // See LICENSE file for license information.
 // TODO: THIS FILE IS FOR BACKWARDS COMPATIBILITY - REMOVE WHEN NO LONGER NEEDED
 
-use Serendipity\PageGenerator;
+use LuckyCoin\PageGenerator;
 
 $pg = new PageGenerator();
 $pg->render();

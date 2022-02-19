@@ -1,11 +1,11 @@
 <?php
 
-// Serendipity
+// 幸運な偶然 - Lucky Coinkydink
 // See LICENSE file for license information.
 
-namespace Serendipity\Database;
+namespace LuckyCoin\Database;
 
-use Serendipity\Database\DbAbstract;
+use LuckyCoin\Database\DbAbstract;
 use PDO;
 
 class PdoSqliteDatabase extends DbAbstract

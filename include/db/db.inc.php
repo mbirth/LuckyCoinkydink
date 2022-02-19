@@ -1,12 +1,12 @@
 <?php
 
-// Serendipity
+// Lucky Coinkydink
 // See LICENSE file for license information.
 
 // FIXME: THIS IS A SHIM FOR BACKWARDS COMPATIBILITY - REMOVE WHEN NO LONGER NEEDED
 
-use Serendipity\Database\DbFactory;
-use Serendipity\Database\DbTools;
+use LuckyCoin\Database\DbFactory;
+use LuckyCoin\Database\DbTools;
 
 // SQLite3 only fetches by assoc, we will emulate the other result types
 define(SQLITE3_ASSOC, 0);

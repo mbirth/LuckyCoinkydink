@@ -1,12 +1,12 @@
 <?php
 
-// Serendipity
+// 幸運な偶然 - Lucky Coinkydink
 // See LICENSE file for license information.
 
-namespace Serendipity;
+namespace LuckyCoin;
 
-use Serendipity\ConfigContainer;
-use Serendipity\PageGenerator;
+use LuckyCoin\ConfigContainer;
+use LuckyCoin\PageGenerator;
 
 class Routing
 {

@@ -1,11 +1,11 @@
 <?php
 
-// Serendipity
+// 幸運な偶然 - Lucky Coinkydink
 // See LICENSE file for license information.
 
-namespace Serendipity;
+namespace LuckyCoin;
 
-use Serendipity\ConfigContainer;
+use LuckyCoin\ConfigContainer;
 use voku\cache\Cache;
 use voku\cache\CacheAdapterAutoManager;
 use voku\cache\AdapterArray;

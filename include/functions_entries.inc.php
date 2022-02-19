@@ -2,7 +2,7 @@
 # Copyright (c) 2003-2005, Jannis Hermanns (on behalf the Serendipity Developer Team)
 # All rights reserved.  See LICENSE file for licensing details
 
-use Serendipity\ContentCache;
+use LuckyCoin\ContentCache;
 
 if (IN_serendipity !== true) {
     die ("Don't hack!");
