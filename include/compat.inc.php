@@ -341,33 +341,6 @@ function serendipity_get_bool($item) {
 }
 
 /**
- * Get the current charset
- *
- * @return  string      Empty string or "UTF-8/".
- */
-function serendipity_getCharset() {
-    global $serendipity;
-
-    $charset = $serendipity['charset'] ?? '';
-    if (!empty($_POST['charset'])) {
-        if ($_POST['charset'] == 'UTF-8/') {
-            $charset = 'UTF-8/';
-        } else {
-            $charset = '';
-        }
-    }
-
-    if (!empty($serendipity['POST']['charset'])) {
-        if ($serendipity['POST']['charset'] == 'UTF-8/') {
-            $charset = 'UTF-8/';
-        } else {
-            $charset = '';
-        }
-    }
-    return $charset;
-}
-
-/**
  * Detect the language of the User Agent/Visitor
  *
  * This function needs to be included at this point so that it is globally available, also
@@ -383,13 +356,11 @@ function serendipity_detectLang($use_include = false) {
     $supported_languages = array_keys($serendipity['languages']);
     $possible_languages = explode(',', (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? $_SERVER['HTTP_ACCEPT_LANGUAGE'] : ''));
     if (is_array($possible_languages)) {
-        $charset = serendipity_getCharset();
-
         foreach($possible_languages as $index => $lang) {
             $preferred_language = strtolower(preg_replace('@^([^\-_;]*)_?.*$@', '\1', $lang));
             if (in_array($preferred_language, $supported_languages)) {
                 if ($use_include) {
-                    @include_once(S9Y_INCLUDE_PATH . 'lang/' . $charset . 'serendipity_lang_' . $preferred_language . '.inc.php');
+                    @include_once(S9Y_INCLUDE_PATH . 'lang/UTF-8/serendipity_lang_' . $preferred_language . '.inc.php');
                     //$serendipity['autolang'] = $preferred_language; -> according to the documentation, it should remain on 'en'
                 }
                 return $preferred_language;
@@ -420,11 +391,10 @@ function serendipity_getCoreVersion($version) {
  * @return null
  */
 function serendipity_die($html) {
-    $charset = !defined('LANG_CHARSET') ? 'UTF-8' : LANG_CHARSET;
     die(
 '<html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=' . $charset . '">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     </head>
     <body><div class="msg_notice">' . $html . '</div><style>.msg_notice {
     display: block;
