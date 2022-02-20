@@ -5,7 +5,6 @@
 
 /* jedit: php,indent,utf-8, unix : */
 
-@define('LANG_CHARSET', 'UTF-8');
 @define('SQL_CHARSET', 'utf8');
 @define('DATE_LOCALES', 'tr_TR.UTF-8, tr.UTF-8, turkish.UTF-8, turkish, tr, tr_TR');
 @define('DATE_FORMAT_ENTRY', '%A, %B %e. %Y');

@@ -5,7 +5,6 @@
 # Please report me any bug with <webmaster@oxygenws.com>
 /* vim: set sts=4 ts=4 expandtab : */
 
-@define('LANG_CHARSET', 'UTF-8');
 @define('SQL_CHARSET', 'utf8');
 @define('DATE_LOCALES', 'fa_IR.UTF-8, fa_IR, persian, fa');
 @define('DATE_FORMAT_ENTRY', '%A، %e %B %Y');

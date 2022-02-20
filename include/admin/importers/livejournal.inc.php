@@ -123,7 +123,7 @@ class Serendipity_Import_LiveJournalXML extends Serendipity_Import {
             }
 
             xml_parser_set_option($p, XML_OPTION_CASE_FOLDING, 0);
-            @xml_parser_set_option($p, XML_OPTION_TARGET_ENCODING, LANG_CHARSET);
+            @xml_parser_set_option($p, XML_OPTION_TARGET_ENCODING, 'UTF-8');
             $xml_package = $xml_string . "\n" . $xml_package;
             xml_parse_into_struct($p, $xml_package, $vals);
             xml_parser_free($p);

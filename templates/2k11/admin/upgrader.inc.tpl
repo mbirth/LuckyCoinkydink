@@ -2,7 +2,7 @@
 <!--[if IE 8]>    <html class="no-js lt-ie9" lang="{$lang}"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang="{$lang}"> <!--<![endif]-->
 <head>
-    <meta charset="{$CONST.LANG_CHARSET}">
+    <meta charset="utf-8">
     <title>{if $admin_vars.title}{$admin_vars.title} | {/if}{$CONST.SERENDIPITY_ADMIN_SUITE}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{$head_link_stylesheet}">

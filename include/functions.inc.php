@@ -126,7 +126,7 @@ function serendipity_strftime($format, $timestamp = null, $useOffset = true, $us
 
     if ($is_win_utf === null) {
         // Windows does not have UTF-8 locales.
-        $is_win_utf = (LANG_CHARSET == 'UTF-8' && strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ? true : false);
+        $is_win_utf = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ? true : false);
     }
 
     if ($useDate) {
@@ -516,7 +516,7 @@ function serendipity_sendMail($to, $subject, $message, $fromMail, $headers = NUL
         'message'  => &$message
     );
 
-    serendipity_plugin_api::hook_event('backend_sendmail', $maildata, LANG_CHARSET);
+    serendipity_plugin_api::hook_event('backend_sendmail', $maildata, 'UTF-8');
 
     // This routine can be overridden by a plugin.
     if ($maildata['legacy']) {
@@ -526,8 +526,8 @@ function serendipity_sendMail($to, $subject, $message, $fromMail, $headers = NUL
             // Usually this is according to spec, but for us it caused more trouble than
             // it prevented.
             // Regards to Mark Kronsbein for finding this issue!
-            $maildata['subject'] = str_replace(array("\n", "\r"), array('', ''), mb_encode_mimeheader($maildata['subject'], LANG_CHARSET));
-            $maildata['fromName'] = str_replace(array("\n", "\r"), array('', ''), mb_encode_mimeheader($maildata['fromName'], LANG_CHARSET));
+            $maildata['subject'] = str_replace(array("\n", "\r"), array('', ''), mb_encode_mimeheader($maildata['subject'], 'UTF-8'));
+            $maildata['fromName'] = str_replace(array("\n", "\r"), array('', ''), mb_encode_mimeheader($maildata['fromName'], 'UTF-8'));
         }
 
 
@@ -543,17 +543,15 @@ function serendipity_sendMail($to, $subject, $message, $fromMail, $headers = NUL
         $maildata['headers'][] = 'Message-ID: <'. bin2hex(random_bytes(16)) .'@'. $_SERVER['HTTP_HOST'] .'>';
         $maildata['headers'][] = 'MIME-Version: 1.0';
         $maildata['headers'][] = 'Precedence: bulk';
-        $maildata['headers'][] = 'Content-Type: text/plain; charset=' . LANG_CHARSET;
+        $maildata['headers'][] = 'Content-Type: text/plain; charset=utf-8';
         $maildata['headers'][] = 'Auto-Submitted: auto-generated';
 
-        if (LANG_CHARSET == 'UTF-8') {
-            if (function_exists('imap_8bit') && !$serendipity['forceBase64']) {
-                $maildata['headers'][] = 'Content-Transfer-Encoding: quoted-printable';
-                $maildata['message']   = str_replace("\r\n","\n",imap_8bit($maildata['message']));
-            } else {
-                $maildata['headers'][] = 'Content-Transfer-Encoding: base64';
-                $maildata['message']   = chunk_split(base64_encode($maildata['message']));
-            }
+        if (function_exists('imap_8bit') && !$serendipity['forceBase64']) {
+            $maildata['headers'][] = 'Content-Transfer-Encoding: quoted-printable';
+            $maildata['message']   = str_replace("\r\n","\n",imap_8bit($maildata['message']));
+        } else {
+            $maildata['headers'][] = 'Content-Transfer-Encoding: base64';
+            $maildata['message']   = chunk_split(base64_encode($maildata['message']));
         }
     }
 
@@ -592,22 +590,7 @@ function serendipity_fetchReferences($id) {
  * @return  string  The output string
  */
 function serendipity_utf8_encode($string) {
-    if (strtolower(LANG_CHARSET) != 'utf-8') {
-        if (function_exists('iconv')) {
-            $new = iconv(LANG_CHARSET, 'UTF-8', $string);
-            if ($new !== false) {
-                return $new;
-            } else {
-                return utf8_encode($string);
-            }
-        } else if (function_exists('mb_convert_encoding')) {
-            return mb_convert_encoding($string, 'UTF-8', LANG_CHARSET);
-        } else {
-            return utf8_encode($string);
-        }
-    } else {
-        return $string;
-    }
+    return $string;
 }
 
 /**

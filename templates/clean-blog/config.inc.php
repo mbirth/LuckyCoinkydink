@@ -272,7 +272,7 @@ function serendipity_plugin_api_pre_event_hook($event, &$bag, &$eventData, &$add
             $entry_specific_header_image_key = 'entry_specific_header_image';
 
             // Check what our special key is set to (checks both POST data as well as the actual data)
-            $is_entry_subtitle = (function_exists('serendipity_specialchars') ? serendipity_specialchars(entry_option_get_value($entry_subtitle_key, $eventData)) : htmlspecialchars(entry_option_get_value($entry_subtitle_key, $eventData), ENT_COMPAT, LANG_CHARSET));
+            $is_entry_subtitle = (function_exists('serendipity_specialchars') ? serendipity_specialchars(entry_option_get_value($entry_subtitle_key, $eventData)) : htmlspecialchars(entry_option_get_value($entry_subtitle_key, $eventData), ENT_COMPAT, 'UTF-8'));
             $is_entry_specific_header_image = entry_option_get_value ($entry_specific_header_image_key, $eventData);
 
             // This is the actual HTML output on the backend screen.

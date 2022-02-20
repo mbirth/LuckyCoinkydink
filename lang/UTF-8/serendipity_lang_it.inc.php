@@ -5,7 +5,6 @@
 #         and (c) by Marco Solari <marco.solari@koinesistemi.it>
 /* vim: set sts=4 ts=4 expandtab : */
 
-@define('LANG_CHARSET', 'UTF-8');
 @define('SQL_CHARSET', 'utf8');
 @define('DATE_LOCALES', 'it_IT.UTF-8, it_IT.UTF8, italiano, it, it_IT');
 @define('DATE_FORMAT_ENTRY', '%A, %e %B %Y');

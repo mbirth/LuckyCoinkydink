@@ -90,7 +90,7 @@ class s9y_remoterss_XMLTree
         $p = xml_parser_create($encoding);
         // by: anony@mous.com - meets XML 1.0 specification
         @xml_parser_set_option($p, XML_OPTION_CASE_FOLDING, 0);
-        xml_parser_set_option($p, XML_OPTION_TARGET_ENCODING, LANG_CHARSET);
+        xml_parser_set_option($p, XML_OPTION_TARGET_ENCODING, 'UTF-8');
         xml_parse_into_struct($p, $data, $vals, $index);
         xml_parser_free($p);
 
@@ -349,15 +349,8 @@ class serendipity_plugin_remoterss extends serendipity_plugin
                 $propbag->add('default',        'native');
 
                 $charsets = array();
-                if (LANG_CHARSET != 'UTF-8') {
-                    $charsets['value'][] = $charsets['desc'][] = 'UTF-8';
-                }
-                if (LANG_CHARSET != 'ISO-8859-1') {
-                    $charsets['value'][] = $charsets['desc'][] = 'ISO-8859-1';
-                }
-
                 $charsets['value'][] = 'native';
-                $charsets['desc'][]  = LANG_CHARSET;
+                $charsets['desc'][]  = 'UTF-8';
                 $propbag->add('radio',          $charsets);
                 break;
 
@@ -882,33 +875,7 @@ class serendipity_plugin_remoterss extends serendipity_plugin
 
     function &decode($string)
     {
-        $target = $this->get_config('charset', 'native');
-
-        // xml_parser_* functions to recoding from ISO-8859-1/UTF-8
-        if (LANG_CHARSET == 'ISO-8859-1' || LANG_CHARSET == 'UTF-8') {
-            return $string;
-        }
-
-        switch($target) {
-            case 'native':
-                return $string;
-
-            case 'ISO-8859-1':
-                if (function_exists('iconv')) {
-                    $out = iconv('ISO-8859-1', LANG_CHARSET, $string);
-                } elseif (function_exists('recode')) {
-                    $out = recode('iso-8859-1..' . LANG_CHARSET, $string);
-                } else {
-                    return $string;
-                }
-
-                return $out;
-
-            case 'UTF-8':
-            default:
-                $out = utf8_decode($string);
-                return $out;
-        }
+        return $string;
     }
 
 }

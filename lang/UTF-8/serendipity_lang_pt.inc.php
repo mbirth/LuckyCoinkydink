@@ -5,7 +5,6 @@
 # with an initial work of Ranulfo Netto <rcnetto@yahoo.com>
 /* vim: set sts=4 ts=4 expandtab : */
 
-@define('LANG_CHARSET', 'UTF-8');
 @define('SQL_CHARSET', 'utf8');
 @define('DATE_LOCALES', 'pt_BR.UTF-8, pt_BR.UTF8, pt_BR, portuguese brazilian, pt');
 @define('DATE_FORMAT_ENTRY', '%A, %e de %B de %Y');

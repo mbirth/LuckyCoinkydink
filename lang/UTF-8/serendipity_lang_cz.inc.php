@@ -35,7 +35,6 @@ $i18n_filename_to = array (
 'A','C','D','E','E','I','L','L','N','O','R','R','S','S','T','U','U','Y','Z','Z',
 '-', '', '', '',
 );
-@define('LANG_CHARSET', 'UTF-8');
 @define('SQL_CHARSET', 'utf8');
 @define('DATE_LOCALES', 'cs_CZ.UTF-8, cs_CZ.UTF8, czech, cs');
 @define('DATE_FORMAT_ENTRY', '%A, %e. %B %Y');

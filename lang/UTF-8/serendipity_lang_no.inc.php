@@ -4,7 +4,6 @@
 # Translation (c) by Jo Christian Oterhals <oterhals@gmail.com>
 /* vim: set sts=4 ts=4 expandtab : */
 
-@define('LANG_CHARSET', 'UTF-8');
 @define('SQL_CHARSET', 'utf8');
 @define('DATE_LOCALES', 'no_NO.UTF-8, no_NO.UTF8, norwegian, no, no_NO, no_');
 @define('DATE_FORMAT_ENTRY', '%A - %e. %B %Y');

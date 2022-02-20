@@ -233,8 +233,8 @@ class serendipity_smarty_emulator_xml extends serendipity_smarty_emulator {
     }
 
     function __construct() {
-        header('Content-Type: text/xml; charset=' . LANG_CHARSET);
-        echo '<?xml version="1.0" encoding="' . LANG_CHARSET . '" ?>' . "\n";
+        header('Content-Type: text/xml; charset=utf-8');
+        echo '<?xml version="1.0" encoding="utf-8" ?>' . "\n";
         /*
         echo '<?xml-stylesheet href="' . serendipity_getTemplateFile('xml.css') . '" type="text/css" ?>' . "\n";
         */

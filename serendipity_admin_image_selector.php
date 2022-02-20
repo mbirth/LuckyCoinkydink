@@ -8,7 +8,7 @@ if (IN_serendipity !== true) {
     die ("Don't hack!");
 }
 
-header('Content-Type: text/html; charset=' . LANG_CHARSET);
+header('Content-Type: text/html; charset=utf-8');
 
 if ($_SESSION['serendipityAuthedUser'] !== true && $serendipity['GET']['step'] != 'showItem')  {
     die(HAVE_TO_BE_LOGGED_ON);

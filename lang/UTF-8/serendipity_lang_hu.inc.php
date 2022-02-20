@@ -4,7 +4,6 @@
 # Translation (c) by Márton Pósz <ful_s@AT@passwd.hu> and Hrotkó Gábor <roti@al.pmmf.hu>
 /* vim: set sts=4 ts=4 expandtab : */
 
-@define('LANG_CHARSET', 'UTF-8');
 @define('SQL_CHARSET', 'utf8');
 @define('DATE_LOCALES', 'hu_HU.UTF-8, hu_HU.UTF8, hungarian, hu, hu_HU');
 @define('DATE_FORMAT_ENTRY', '%Y. %B %e. (%A) ');

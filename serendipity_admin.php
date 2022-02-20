@@ -13,7 +13,7 @@ define('IN_serendipity', true);
 define('IN_serendipity_admin', true);
 include('serendipity_config.inc.php');
 
-header('Content-Type: text/html; charset=' . LANG_CHARSET);
+header('Content-Type: text/html; charset=utf-8');
 
 if (IS_installed === false) {
     require_once(S9Y_INCLUDE_PATH . 'include/functions.inc.php');

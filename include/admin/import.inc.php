@@ -42,23 +42,7 @@ class Serendipity_Import {
  */
     function getCharsets($utf8_default = true) {
         $charsets = array();
-
-        if (!$utf8_default) {
-            $charsets['native'] = LANG_CHARSET;
-        }
-
-        if (LANG_CHARSET != 'UTF-8') {
-            $charsets['UTF-8'] = 'UTF-8';
-        }
-
-        if (LANG_CHARSET != 'ISO-8859-1') {
-            $charsets['ISO-8859-1'] = 'ISO-8859-1';
-        }
-
-        if ($utf8_default) {
-            $charsets['native'] = LANG_CHARSET;
-        }
-
+        $charsets['native'] = 'UTF-8';
         return $charsets;
     }
 
@@ -71,7 +55,7 @@ class Serendipity_Import {
  */
     function &decode($string) {
         // xml_parser_* functions do recoding from ISO-8859-1/UTF-8
-        if (!$this->force_recode && (LANG_CHARSET == 'ISO-8859-1' || LANG_CHARSET == 'UTF-8')) {
+        if (!$this->force_recode) {
             return $string;
         }
 
@@ -83,13 +67,11 @@ class Serendipity_Import {
 
             case 'ISO-8859-1':
                 if (function_exists('iconv')) {
-                    $out = iconv('ISO-8859-1', LANG_CHARSET, $string);
+                    $out = iconv('ISO-8859-1', 'UTF-8', $string);
                 } elseif (function_exists('recode')) {
-                    $out = recode('iso-8859-1..' . LANG_CHARSET, $string);
-                } elseif (LANG_CHARSET == 'UTF-8') {
-                    return utf8_encode($string);
+                    $out = recode('iso-8859-1..UTF-8', $string);
                 } else {
-                    return $string;
+                    return utf8_encode($string);
                 }
                 return $out;
 

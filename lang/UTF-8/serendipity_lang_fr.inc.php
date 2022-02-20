@@ -7,7 +7,6 @@
 # http://www.sossan-martin.com
 /* vim: set sts=4 ts=4 expandtab : */
 
-@define('LANG_CHARSET', 'UTF-8');
 @define('SQL_CHARSET', 'utf8');
 @define('DATE_LOCALES', 'fr_FR.UTF-8, fr_FR.UTF8, french, fr, fr_FR, fr_FR@euro, en_US');
 @define('DATE_FORMAT_ENTRY', '%A, %e %B %Y');

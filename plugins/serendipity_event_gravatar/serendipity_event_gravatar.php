@@ -487,7 +487,7 @@ class serendipity_event_gravatar extends serendipity_event
         $title = '';
         $author = 'unknown';
         if (isset($eventData['author'])) {
-            $author = (function_exists('serendipity_specialchars') ? serendipity_specialchars($eventData['author']) : htmlspecialchars($eventData['author'], ENT_COMPAT, LANG_CHARSET));
+            $author = (function_exists('serendipity_specialchars') ? serendipity_specialchars($eventData['author']) : htmlspecialchars($eventData['author'], ENT_COMPAT, 'UTF-8'));
             $title = $author;
         }
 
@@ -792,7 +792,7 @@ class serendipity_event_gravatar extends serendipity_event
                                           ($mode=='F' && preg_match('/<link[^>]+rel="(?:shortcut )?icon"[^>]+?href="([^"]+?)"/si', $fContent, $matches)))
                 {
                     // Attempt to grab an avatar link from their webpage url
-                    $linkUrl = (function_exists('serendipity_entity_decode') ? serendipity_entity_decode($matches[1]) : html_entity_decode($matches[1], ENT_COMPAT, LANG_CHARSET));
+                    $linkUrl = (function_exists('serendipity_entity_decode') ? serendipity_entity_decode($matches[1]) : html_entity_decode($matches[1], ENT_COMPAT, 'UTF-8'));
                     if (substr($linkUrl, 0, 1) == '/') {
                         if ($urlParts = parse_url($url)) {
                             $faviconURL = $urlParts['scheme'] . '://' . $urlParts['host'] . $linkUrl;

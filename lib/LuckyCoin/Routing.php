@@ -156,7 +156,7 @@ class Routing
             header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', time() + 3600));
         }
 
-        header('Content-type: application/javascript; charset=' . LANG_CHARSET);
+        header('Content-type: application/javascript; charset=utf-8');
 
         $out = "";
         // FIXFIX: including genpage without any given action will generate the

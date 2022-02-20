@@ -14,7 +14,7 @@ header('Status: 200 OK');
 
 // Session are needed to also remember an autologin user on the frontend
 include('serendipity_config.inc.php');
-header('Content-Type: text/html; charset='. LANG_CHARSET);
+header('Content-Type: text/html; charset=utf-8');
 
 if ($serendipity['CacheControl']) {
     if (!empty($_SERVER['SERVER_SOFTWARE']) && strstr($_SERVER['SERVER_SOFTWARE'], 'Apache/2')) {

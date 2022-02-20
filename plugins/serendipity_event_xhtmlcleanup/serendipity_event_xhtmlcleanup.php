@@ -226,15 +226,7 @@ class serendipity_event_xhtmlcleanup extends serendipity_event
         $val      = &$this->cleanup_val;
 
         // Instead of nasty regex-mangling we use the XML parser to get the attribute list of our input tag
-        switch(strtolower(LANG_CHARSET)) {
-            case 'iso-8859-1':
-            case 'utf-8':
-                $p = xml_parser_create(LANG_CHARSET);
-                break;
-
-            default:
-                $p = xml_parser_create('');
-        }
+        $p = xml_parser_create('UTF-8');
 
         @xml_parse_into_struct($p, $data[0], $vals, $index);
         xml_parser_free($p);

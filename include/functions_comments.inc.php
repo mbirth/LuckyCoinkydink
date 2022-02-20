@@ -76,7 +76,7 @@ function serendipity_checkCommentTokenModeration($uri) {
             } else {
                 $return_msg = sprintf (BADTOKEN)."\n";
             }
-            header('Content-Type: text/plain; charset='. LANG_CHARSET);
+            header('Content-Type: text/plain; charset=utf-8');
             die($return_msg);
         }
     }
@@ -102,7 +102,7 @@ function serendipity_checkCommentTokenModeration($uri) {
             } else {
                 $return_msg = sprintf (BADTOKEN)."\n";
             }
-            header('Content-Type: text/plain; charset='. LANG_CHARSET);
+            header('Content-Type: text/plain; charset=utf-8');
             die($return_msg);
         }
     }

@@ -175,20 +175,16 @@ function serendipity_makeFilename($str, $stripDots = false) {
             // The array of chars is defined in the language file.
             $str = str_replace($GLOBALS['i18n_filename_from'], $GLOBALS['i18n_filename_to'], $str);
 
-            if (LANG_CHARSET == 'UTF-8') {
-                // URLs need to be 7bit - since this function takes care of the most common ISO-8859-1
-                // characters, try to UTF8-decode the string first.
-                $str = utf8_decode($str);
-            }
+            // URLs need to be 7bit - since this function takes care of the most common ISO-8859-1
+            // characters, try to UTF8-decode the string first.
+            $str = utf8_decode($str);
         } else {
             // Replace international chars not detected by every locale
             $str = str_replace($from, $to, $str);
 
-            if (LANG_CHARSET == 'UTF-8') {
-                // URLs need to be 7bit - since this function takes care of the most common ISO-8859-1
-                // characters, try to UTF8-decode the string first.
-                $str = utf8_decode($str);
-            }
+            // URLs need to be 7bit - since this function takes care of the most common ISO-8859-1
+            // characters, try to UTF8-decode the string first.
+            $str = utf8_decode($str);
         }
 
         // Nuke chars not allowed in our URI

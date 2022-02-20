@@ -5,7 +5,6 @@
 # (c) 2005, 2016 http://www.tool-box.info/
 /* vim: set sts=4 ts=4 expandtab : */
 
-@define('LANG_CHARSET', 'UTF-8');
 @define('SQL_CHARSET', 'utf8');
 @define('DATE_LOCALES', 'ko_KR.UTF-8, korean, ko, ko_KR');
 @define('DATE_FORMAT_ENTRY', '%Y년 %B %e일 %A');

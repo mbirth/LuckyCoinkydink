@@ -354,22 +354,14 @@ function add_trackback($id, $title, $url, $name, $excerpt) {
         'comment' => $excerpt
     );
 
-    $is_utf8 = strtolower(LANG_CHARSET) == 'utf-8';
+    $is_utf8 = true;
     log_trackback('TRACKBACK TRANSCODING CHECK');
 
     foreach($comment AS $idx => $field) {
-        if (is_utf8($field)) {
-            // Trackback is in UTF-8. Check if our blog also is UTF-8.
-            if (!$is_utf8) {
-                log_trackback('Transcoding ' . $idx . ' from UTF-8 to ISO');
-                $comment[$idx] = utf8_decode($field);
-            }
-        } else {
+        if (!is_utf8($field)) {
             // Trackback is in some native format. We assume ISO-8859-1. Check if our blog is also ISO.
-            if ($is_utf8) {
-                log_trackback('Transcoding ' . $idx . ' from ISO to UTF-8');
-                $comment[$idx] = utf8_encode($field);
-            }
+            log_trackback('Transcoding ' . $idx . ' from ISO to UTF-8');
+            $comment[$idx] = utf8_encode($field);
         }
     }
 
@@ -553,7 +545,7 @@ function fetchPingbackData(&$comment) {
 
         // Get a title
         if (preg_match('@<head[^>]*>.*?<title[^>]*>(.*?)</title>.*?</head>@is',$fContent,$matches)) {
-            $comment['title'] = serendipity_entity_decode(strip_tags($matches[1]), ENT_COMPAT, LANG_CHARSET);
+            $comment['title'] = serendipity_entity_decode(strip_tags($matches[1]), ENT_COMPAT, 'UTF-8');
         }
 
         // Try to get content from first <p> tag on:
@@ -589,7 +581,7 @@ function trackback_body_strip($body){
     $body = str_replace('&nbsp;', ' ', $body);
 
     // strip html entities and tags.
-    $body = serendipity_entity_decode(strip_tags($body), ENT_COMPAT, LANG_CHARSET);
+    $body = serendipity_entity_decode(strip_tags($body), ENT_COMPAT, 'UTF-8');
 
     // replace whitespace with single space
     $body = preg_replace('@\s+@s', ' ', $body);

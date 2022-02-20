@@ -3,7 +3,6 @@
 # All rights reserved.  See LICENSE file for licensing details
 /* vim: set sts=4 ts=4 expandtab : */
 
-@define('LANG_CHARSET', 'UTF-8');
 @define('SQL_CHARSET', 'utf8');
 @define('DATE_LOCALES', 'en_US.UTF-8, en_US.UTF8, english, en, en_US');
 @define('DATE_FORMAT_ENTRY', '%A, %B %e. %Y');

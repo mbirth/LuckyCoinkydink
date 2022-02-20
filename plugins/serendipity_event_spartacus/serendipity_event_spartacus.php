@@ -549,7 +549,7 @@ class serendipity_event_spartacus extends serendipity_event
                 }
 
                 if ($decode_utf8) {
-                    $data = str_replace('<?xml version="1.0" encoding="UTF-8" ?>', '<?xml version="1.0" encoding="' . LANG_CHARSET . '" ?>', $data);
+                    $data = str_replace('<?xml version="1.0" encoding="UTF-8" ?>', '<?xml version="1.0" encoding="utf-8" ?>', $data);
                     $this->decode($data, true);
                 }
 
@@ -569,26 +569,8 @@ class serendipity_event_spartacus extends serendipity_event
     function decode(&$data, $force = false)
     {
         // xml_parser_* functions to recoding from ISO-8859-1/UTF-8
-        if ($force === false && (LANG_CHARSET == 'ISO-8859-1' || LANG_CHARSET == 'UTF-8')) {
+        if ($force === false) {
             return true;
-        }
-
-        switch (strtolower(LANG_CHARSET)) {
-            case 'utf-8':
-                // The XML file is UTF-8 format. No changes needed.
-                break;
-
-            case 'iso-8859-1':
-                $data = utf8_decode($data);
-                break;
-
-            default:
-                if (function_exists('iconv')) {
-                    $data = iconv('UTF-8', LANG_CHARSET, $data);
-                } elseif (function_exists('recode')) {
-                    $data = recode('utf-8..' . LANG_CHARSET, $data);
-                }
-                break;
         }
     }
 

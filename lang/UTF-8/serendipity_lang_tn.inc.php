@@ -6,7 +6,6 @@
 /* vim: set sts=4 ts=4 expandtab : */
 $i18n_unknown = 'tw';
 
-@define('LANG_CHARSET', 'UTF-8');
 @define('SQL_CHARSET', 'utf8');
 @define('DATE_LOCALES', 'zh-TW.UTF-8, zh_TW.UTF-8, tw, zh');
 @define('DATE_FORMAT_ENTRY', '%A, %B %e. %Y');

@@ -12,7 +12,7 @@ use LuckyCoin\PageGenerator;
 include('serendipity_config.inc.php');
 include S9Y_INCLUDE_PATH . 'include/functions_entries_admin.inc.php';
 
-header('Content-Type: text/html; charset=' . LANG_CHARSET);
+header('Content-Type: text/html; charset=utf-8');
 $raw_post_data = file_get_contents("php://input");
 
 if (isset($serendipity['GET']['delete'], $serendipity['GET']['entry'], $serendipity['GET']['type']) && serendipity_checkFormToken()) {

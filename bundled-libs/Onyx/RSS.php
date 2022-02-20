@@ -69,7 +69,7 @@ class ONYX_RSS
       }
 
       if ($charset == 'native') {
-         $charset = LANG_CHARSET;
+         $charset = 'UTF-8';
       }
       $this->parser = @xml_parser_create($charset);
       if (!is_resource($this->parser))
@@ -79,7 +79,7 @@ class ONYX_RSS
       }
       xml_set_object($this->parser, $this);
       xml_parser_set_option($this->parser, XML_OPTION_CASE_FOLDING, false);
-      @xml_parser_set_option($this->parser, XML_OPTION_TARGET_ENCODING, LANG_CHARSET);
+      @xml_parser_set_option($this->parser, XML_OPTION_TARGET_ENCODING, 'UTF-8');
       xml_set_element_handler($this->parser, 'tag_open', 'tag_close');
       xml_set_character_data_handler($this->parser, 'cdata');
    }

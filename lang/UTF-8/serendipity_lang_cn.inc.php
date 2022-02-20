@@ -6,7 +6,6 @@
 #          http://www.cexten.com  
 /* vim: set sts=4 ts=4 expandtab : */
 
-@define('LANG_CHARSET', 'UTF-8');
 @define('SQL_CHARSET', 'utf8');
 @define('DATE_LOCALES', 'zh_CN.UTF-8, cn, zh');
 @define('DATE_FORMAT_ENTRY', '%A, %B %e. %Y');

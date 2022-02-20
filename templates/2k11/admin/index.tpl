@@ -2,7 +2,7 @@
 <!--[if IE 8]>    <html class="no-js lt-ie9" lang="{$lang}"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" dir="{$CONST.LANG_DIRECTION}" lang="{$lang}"> <!--<![endif]-->
 <head>
-    <meta charset="{$CONST.LANG_CHARSET}">
+    <meta charset="utf-8">
     {if !$admin_vars.backendBlogtitleFirst}
         <title>{if $admin_vars.title}{$admin_vars.title} | {/if}{$blogTitle} | {$CONST.SERENDIPITY_ADMIN_SUITE}</title>
     {else}

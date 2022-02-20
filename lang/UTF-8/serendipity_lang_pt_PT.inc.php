@@ -7,7 +7,6 @@
 # and even more work from Angel pticore@users.sourceforge.net
 /* vim: set sts=4 ts=4 expandtab : */
 
-@define('LANG_CHARSET', 'UTF-8');
 @define('SQL_CHARSET', 'utf8');
 @define('DATE_LOCALES', 'pt_PT.UTF-8, pt_PT.UTF8, pt, pt_PT, european portuguese');
 @define('DATE_FORMAT_ENTRY', '%A, %e de %B de %Y');

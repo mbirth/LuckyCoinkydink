@@ -6,7 +6,6 @@
 #            Robert Piil, <robert@piil.org>
 /* vim: set sts=4 ts=4 expandtab : */
 
-@define('LANG_CHARSET', 'UTF-8');
 @define('SQL_CHARSET', 'utf8');
 @define('DATE_LOCALES', 'da_DK.UTF8, da_DK.UTF-8, danish, da, da_DK');
 @define('DATE_FORMAT_ENTRY', '%A d. %e. %B %Y');

@@ -928,11 +928,6 @@ function serendipity_smarty_init($vars = array()) {
             $prev_smarty = $_SESSION['no_smarty'] ?? null;
             $_SESSION['no_smarty'] = true;
 
-            if (LANG_CHARSET != 'UTF-8') {
-                @define('SMARTY_MBSTRING', false);
-                @define('SMARTY_RESOURCE_CHAR_SET', LANG_CHARSET);
-            }
-
             // define cache resources to load with smarty - see smarty cache readme - needs enabled cache!
             #@define('APC_EXTENSION_LOADED', extension_loaded('apc') && ini_get('apc.enabled'));
             #@define('MEMCACHE_EXTENSION_LOADED', (class_exists('Memcached',false) || class_exists('Memcache',false)) && (extension_loaded("memcached") || extension_loaded("memcache")));
@@ -1081,7 +1076,7 @@ function serendipity_smarty_init($vars = array()) {
 
         $serendipity['smarty']->assign(
             array(
-                'head_charset'              => LANG_CHARSET,
+                'head_charset'              => 'UTF-8',
                 'head_version'              => $serendipity['version'],
                 'head_title'                => $serendipity['head_title'] ?? null,
                 'head_subtitle'             => $serendipity['head_subtitle'] ?? null,

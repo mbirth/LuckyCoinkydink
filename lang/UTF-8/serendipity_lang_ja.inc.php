@@ -4,7 +4,6 @@
 # Translation (c) Tadashi Jokagi <elf2000@users.sourceforge.net>, 2004-2010.
 /* vim: set sts=4 ts=4 expandtab : */
 
-@define('LANG_CHARSET', 'UTF-8');
 @define('SQL_CHARSET', 'utf8');
 @define('DATE_LOCALES', 'ja_JP.UTF-8,ja,jp');
 @define('DATE_FORMAT_ENTRY', '%Y年 %B %e(%A)');
