@@ -8,22 +8,6 @@ if (IN_serendipity !== true) {
 
 #$serendipity = array();
 
-if (!defined('PATH_SEPARATOR')) {
-    if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-        define('PATH_SEPARATOR', ';');
-    } else {
-        define('PATH_SEPARATOR', ':');
-    }
-}
-
-if (!defined('DIRECTORY_SEPARATOR')) {
-    if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-        define('DIRECTORY_SEPARATOR', '\\');
-    } else {
-        define('DIRECTORY_SEPARATOR', '/');
-    }
-}
-
 /**
  * Create a snapshot of the current memory usage
  *
