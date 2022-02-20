@@ -50,13 +50,8 @@ if (!defined('serendipity_LANG_LOADED') || serendipity_LANG_LOADED !== true) {
 if (!defined('serendipity_MB_LOADED') && defined('serendipity_LANG_LOADED')) {
     // Needs to be included here because we need access to constant LANG_CHARSET definied in languages (not available for compat.inc.php)
 
-    if (function_exists('mb_language')) {
-        @mb_language('uni'); // TODO: test for non-unicode installations
-    }
-
-    if (function_exists('mb_internal_encoding')) {
-        @mb_internal_encoding(LANG_CHARSET);
-    }
+    @mb_language('uni');
+    @mb_internal_encoding('UTF-8');
 
     /**
      * Wrapper for multibyte string operations
