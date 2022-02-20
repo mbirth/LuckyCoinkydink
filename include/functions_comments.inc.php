@@ -324,7 +324,7 @@ function serendipity_generateCommentList($id, $comments = NULL, $selected = 0, $
     foreach ($comments as $comment) {
         if ($comment['parent_id'] == $parent) {
             $i++;
-            $retval .= '<option value="' . $comment['id'] . '"'. ($selected == $comment['id'] || (isset($serendipity['POST']['replyTo']) && $comment['id'] == $serendipity['POST']['replyTo']) ? ' selected="selected"' : '') .'>' . str_repeat('&#160;', $level * 2) . '#' . $indent . $i . ': ' . (empty($comment['author']) ? ANONYMOUS : serendipity_specialchars($comment['author'])) . ' ' . ON . ' ' . serendipity_mb('ucfirst', serendipity_strftime(DATE_FORMAT_SHORT, $comment['timestamp'])) . "</option>\n";
+            $retval .= '<option value="' . $comment['id'] . '"'. ($selected == $comment['id'] || (isset($serendipity['POST']['replyTo']) && $comment['id'] == $serendipity['POST']['replyTo']) ? ' selected="selected"' : '') .'>' . str_repeat('&#160;', $level * 2) . '#' . $indent . $i . ': ' . (empty($comment['author']) ? ANONYMOUS : serendipity_specialchars($comment['author'])) . ' ' . ON . ' ' . serendipity_mb_ucfirst(serendipity_strftime(DATE_FORMAT_SHORT, $comment['timestamp'])) . "</option>\n";
             $retval .= serendipity_generateCommentList($id, $comments, $selected, $comment['id'], $level + 1, $indent . $i . '.');
         }
     }
