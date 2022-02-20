@@ -310,7 +310,7 @@ if (is_array($sql)) {
         $i++;
         $comment = array(
             'fullBody'  => $rs['body'],
-            'summary'   => serendipity_mb('substr', $rs['body'], 0, $summaryLength),
+            'summary'   => mb_substr($rs['body'], 0, $summaryLength),
             'status'    => $rs['status'],
             'type'      => $rs['type'],
             'id'        => $rs['id'],

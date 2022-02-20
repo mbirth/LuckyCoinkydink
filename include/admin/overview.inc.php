@@ -85,7 +85,7 @@ if (is_array($comments) && count($comments) > 0) {
         $comment['entrylink'] = serendipity_archiveURL($comment['entry_id'], 'comments', 'serendipityHTTPPath', true) . '#c' . $comment['id'];
 
         $comment['fullBody']  = $comment['body'];
-        $comment['summary']   = serendipity_mb('substr', $comment['body'], 0, 100);
+        $comment['summary']   = mb_substr($comment['body'], 0, 100);
 
         if (strlen($comment['fullBody']) > strlen($comment['summary']) ) {
             $comment['excerpt'] = true;

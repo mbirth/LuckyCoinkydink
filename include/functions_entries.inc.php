@@ -877,7 +877,7 @@ function &serendipity_searchEntries($term, $limit = '', $searchresults = '') {
         $term = str_replace('*', '%', $term);
         $cond['group']     = 'GROUP BY e.id';
         $cond['distinct']  = '';
-        $term              = serendipity_mb('strtolower', $term);
+        $term              = mb_strtolower($term);
         $cond['find_part'] = "(lower(title) LIKE '%$term%' OR lower(body) LIKE '%$term%' OR lower(extended) LIKE '%$term%')";
     } else {
         $cond['group']    = 'GROUP BY e.id';

@@ -605,7 +605,7 @@ function trackback_body_strip($body){
  * @return  string  Output text
  */
 function serendipity_trackback_excerpt($text) {
-    return serendipity_mb('substr', strip_tags($text), 0, 255);
+    return mb_substr(strip_tags($text), 0, 255);
 }
 
 /**

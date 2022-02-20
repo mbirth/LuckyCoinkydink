@@ -285,7 +285,7 @@ switch($serendipity['GET']['adminAction']) {
                 }
             } elseif ($serendipity['dbType'] == 'sqlite' || $serendipity['dbType'] == 'sqlite3' || $serendipity['dbType'] == 'pdo-sqlite' || $serendipity['dbType'] == 'sqlite3oo') {
                 $term = str_replace('*', '%', $term);
-                $term = serendipity_mb('strtolower', $term);
+                $term = mb_strtolower($term);
                 $filter[] = "(lower(title) LIKE '%$term%' OR lower(body) LIKE '%$term%' OR lower(extended) LIKE '%$term%')";
             } else {
                 if (preg_match('@["\+\-\*~<>\(\)]+@', $term)) {

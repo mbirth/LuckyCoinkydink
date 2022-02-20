@@ -34,7 +34,7 @@ include_once(S9Y_INCLUDE_PATH . 'include/functions_smarty.inc.php');
  */
 function serendipity_truncateString($s, $len) {
     if ( strlen($s) > ($len+3) ) {
-        $s = serendipity_mb('substr', $s, 0, $len) . '...';
+        $s = mb_substr($s, 0, $len) . '...';
     }
     return $s;
 }
