@@ -5,6 +5,9 @@
 
 namespace LuckyCoin;
 
+// FIXME: Remove when code makes sense again
+error_reporting(E_ALL & ~E_NOTICE);
+
 // Ensure vendor libraries exist
 $autoload = __DIR__ . '/../vendor/autoload.php';
 if (!is_file($autoload)) {

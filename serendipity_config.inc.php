@@ -59,21 +59,6 @@ if (!isset($serendipity['production'])) {
     $serendipity['production'] = ! preg_match('@\-(alpha|cvs).*@', $serendipity['version']);
 }
 
-// Set error reporting
-if ($serendipity['production']) {
-    error_reporting(E_ALL & ~(E_WARNING|E_NOTICE|E_STRICT|E_DEPRECATED));
-} else {
-    error_reporting(E_ALL & ~(E_NOTICE|E_STRICT|E_DEPRECATED));
-}
-
-if ($serendipity['production'] !== true) {
-    @ini_set('display_errors', 'on');
-    @ini_set('display_startup_errors', 'on');
-}
-
-// The serendipity errorhandler string
-$serendipity['errorhandler'] = 'errorToExceptionHandler';
-
 // Default rewrite method
 $serendipity['rewrite'] = 'none';
 
@@ -218,13 +203,6 @@ $serendipity['charsets'] = array(
 @define('VIEWMODE_THREADED', 'threaded');
 @define('VIEWMODE_LINEAR', 'linear');
 
-if (!version_compare(phpversion(), '5.3', '>=')) {
-    $serendipity['lang'] = 'en';
-    include(S9Y_INCLUDE_PATH . 'include/lang.inc.php');
-    serendipity_die(sprintf(SERENDIPITY_PHPVERSION_FAIL, phpversion(), '5.3'));
-}
-
-
 // Kill the script if we are not installed, and not inside the installer
 if ( !defined('IN_installer') && IS_installed === false ) {
     header('Status: 302 Found');
@@ -235,22 +213,12 @@ if ( !defined('IN_installer') && IS_installed === false ) {
 
 // Do the PEAR dance. If $serendipity['use_PEAR'] is set to FALSE, Serendipity will first put its own PEAR include path.
 // By default, a local PEAR will be used.
-if (function_exists('get_include_path')) {
-    $old_include = @get_include_path();
-} else {
-    $old_include = @ini_get('include_path');
-}
-
+$old_include = @get_include_path();
 $new_include = ($serendipity['use_PEAR'] ? $old_include . PATH_SEPARATOR : '')
              . S9Y_INCLUDE_PATH . 'bundled-libs/' . PATH_SEPARATOR
              . $serendipity['serendipityPath'] . PATH_SEPARATOR
              . (!$serendipity['use_PEAR'] ? $old_include . PATH_SEPARATOR : '');
-
-if (function_exists('set_include_path')) {
-    $use_include = @set_include_path($new_include);
-} else {
-    $use_include = @ini_set('include_path', $new_include);
-}
+$use_include = @set_include_path($new_include);
 
 if ($use_include !== false && $use_include == $new_include) {
     @define('S9Y_PEAR', true);
