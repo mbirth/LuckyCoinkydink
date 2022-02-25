@@ -145,7 +145,7 @@ class MysqliDatabase extends DbAbstract
      * @access public
      * @return int      Value of the auto-increment column
      */
-    public function insertId()
+    public function insertId($table = '', $id = '')
     {
         return mysqli_insert_id($this->db_conn);
     }
