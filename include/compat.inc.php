@@ -418,12 +418,6 @@ if (!isset($serendipity['serendipityPath'])) {
 
 $serendipity['indexFile'] = 'index.php';
 
-if (function_exists('date_default_timezone_get')) {
-    // We currently offer no Timezone setting (only offset to UTC), so we
-    // rely on the OS' timezone.
-    @date_default_timezone_set(@date_default_timezone_get());
-}
-
 /**
  * In PHP 5.4, the default encoding of htmlspecialchar changed to UTF-8 and it will emit empty strings when given
  * native encoded strings containing umlauts. This wrapper should to be used in the core until PHP 5.6 fixes the bug.
